@@ -68,7 +68,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>back</finalName>
+		<finalName>mng</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
