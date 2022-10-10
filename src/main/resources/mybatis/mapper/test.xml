@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+                        
+<mapper namespace="org.sangokch.mapper.TestMapper">
+	<select id="totSize" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) totSize FROM code
+		WHERE parent_cd = #{parentCd} 
+	</select>
+</mapper>
