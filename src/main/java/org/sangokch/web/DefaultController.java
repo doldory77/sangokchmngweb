@@ -1,10 +1,5 @@
 package org.sangokch.web;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.sangokch.model.Board;
 import org.sangokch.model.ResponseData;
 import org.sangokch.service.BoardService;
@@ -31,29 +26,13 @@ public class DefaultController {
 	
 	@RequestMapping("/")
 	public String index(Model model) {
-		List<Map<String, Object>> menuList = new ArrayList<>();
-		Map<String, Object> menu = null;
-		
-		menu = new HashMap<>();
-		menu.put("name", "Home");
-		menu.put("path", "/");
-		menuList.add(menu);
-		
-		menu = new HashMap<>();
-		menu.put("name", "Help");
-		menu.put("path", "/help");
-		menuList.add(menu);
-		
-		menu = new HashMap<>();
-		menu.put("name", "Board");
-		menu.put("path", "/board");
-		menuList.add(menu);
-		
-		model.addAttribute("name", "doldory");
-		
-		System.out.println(System.getProperty("user.dir"));
-		
+				
 		return "index";
+	}
+	
+	@RequestMapping("/login")
+	public String login() {
+		return "login";
 	}
 	
 	@RequestMapping("/upload")
