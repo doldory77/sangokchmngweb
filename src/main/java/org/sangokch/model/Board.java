@@ -6,8 +6,9 @@ public class Board {
 	public String kind_cd;
 	public String subject;
 	public String content;
+	public String link_url;
 	public int view_cnt;
-	public String del_yn;
+	public String use_yn;
 	public String writer;
 	public String write_dt;
 	public String modifier;
@@ -37,17 +38,23 @@ public class Board {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public String getLink_url() {
+		return link_url;
+	}
+	public void setLink_url(String link_url) {
+		this.link_url = link_url;
+	}
 	public int getView_cnt() {
 		return view_cnt;
 	}
 	public void setView_cnt(int view_cnt) {
 		this.view_cnt = view_cnt;
 	}
-	public String getDel_yn() {
-		return del_yn;
+	public String getUse_yn() {
+		return use_yn;
 	}
-	public void setDel_yn(String del_yn) {
-		this.del_yn = del_yn;
+	public void setUse_yn(String use_yn) {
+		this.use_yn = use_yn;
 	}
 	public String getWriter() {
 		return writer;

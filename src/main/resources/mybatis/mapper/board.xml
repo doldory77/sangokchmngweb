@@ -3,11 +3,32 @@
                         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
                         
 <mapper namespace="org.sangokch.mapper.BoardMapper">
+	<select id="selectBoard" parameterType="hashmap" resultType="Board">
+		SELECT
+			a.kind_cd,
+			b.menu_nm,
+			a.subject,
+			a.content,
+			a.link_url,
+			IFNULL(a.view_cnt, 0) AS view_cnt,
+			a.use_yn,
+			a.writer,
+			a.write_dt,
+			a.modifier,
+			a.modified_dt
+		FROM board a
+			, menu b
+		WHERE a.kind_cd = b.menu_cd
+			AND bno = #{bno}		
+	</select>
 	<insert id="insertBoard" parameterType="Board" useGeneratedKeys="true" keyProperty="bno">
 		INSERT INTO board (
 			kind_cd
 			,subject
 			,content
+			<if test='link_url neq null and link_url neq ""'>
+			,link_url
+			</if>
 			<if test='writer neq null and writer neq ""'>
 			,writer
 			</if>
@@ -16,12 +37,41 @@
 			#{kind_cd}
 			,#{subject}
 			,#{content}
+			<if test='link_url neq null and link_url neq ""'>
+			,#{link_url}
+			</if>
 			<if test='writer neq null and writer neq ""'>
 			,#{writer}
 			</if>
 			,DATE_FORMAT(SYSDATE(), '%Y%m%d%H%i%s')
 		)
 	</insert>
+	<update id="updateBoard" parameterType="Board">
+		UPDATE board SET
+		<if test='kind_cd neq null and kind_cd neq ""'>
+		kind_cd = #{kind_cd},
+		</if>
+		<if test='subject neq null and subject neq ""'>
+		subject = #{subject},
+		</if>
+		<if test='content neq null and content neq ""'>
+		content = #{content},
+		</if>
+		<if test='link_url neq null and link_url neq ""'>
+		link_url = #{link_url},
+		</if>
+		<if test='view_cnt != null'>
+		view_cnt = IFNULL(view_cnt, 0) + 1,
+		</if>
+		<if test='use_yn neq null and use_yn neq ""'>
+		use_yn = #{use_yn}
+		</if>
+		<if test='modifier neq null and modifier neq ""'>
+		modifier = #{modifier},
+		</if>
+		modified_dt = DATE_FORMAT(SYSDATE(), '%Y%m%d%H%i%s')
+		WHERE bno = #{bno}	
+	</update>
 	<insert id="insertFile" parameterType="AttchFile">
 		INSERT INTO file (
 			bno

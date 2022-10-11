@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+                        
+<mapper namespace="org.sangokch.mapper.AdmstMapper">
+	<select id="selectAdmstList" parameterType="hashmap" resultType="Admst">
+		SELECT
+			id,
+			name,
+			super_yn,
+			use_yn,
+			attr
+		FROM admst
+		WHERE 1=1		
+		<if test='id neq null and id neq ""'>
+			and id = #{id}		
+		</if>
+		<if test='use_yn neq null and use_yn neq ""'>
+			and use_yn = 'Y'		
+		</if>
+	</select>
+	<insert id="insertAdmst" parameterType="Admst">
+		INSERT INTO admst (
+			id,
+			name,
+			passwd,
+			attr
+		) VALUES (
+			#{id},
+			#{name},
+			MD5(#{passwd}),
+			#{attr}
+		)	
+	</insert>
+	<update id="updateAdmst" parameterType="Admst">
+		UPDATE admst SET
+			name = #{name},
+			super_yn = IFNULL(#{super_yn}, 'N'),
+			use_yn = #{use_yn},
+			attr = #{attr}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
