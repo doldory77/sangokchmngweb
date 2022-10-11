@@ -13,7 +13,7 @@
 			IFNULL(a.view_cnt, 0) AS view_cnt,
 			a.use_yn,
 			a.writer,
-			a.write_dt,
+			date_format(STR_TO_DATE(a.write_dt, '%Y%m%d%H%i%s'), '%Y-%m-%d %H:%i:%s') AS write_dt, 
 			a.modifier,
 			a.modified_dt
 		FROM board a
