@@ -15,6 +15,9 @@
 		<if test='id neq null and id neq ""'>
 			and id = #{id}		
 		</if>
+		<if test='passwd neq null and passwd neq ""'>
+			and passwd = MD5(#{passwd})		
+		</if>
 		<if test='use_yn neq null and use_yn neq ""'>
 			and use_yn = 'Y'		
 		</if>

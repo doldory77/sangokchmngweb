@@ -23,6 +23,7 @@ public class ManagerwebApplication extends SpringBootServletInitializer implemen
 			.order(1)
 			.addPathPatterns("/**")
 			.excludePathPatterns("/login"
+					,"/doLogin"
 					,"/js/**"
 					,"/css/**"
 					,"/img/**");

@@ -38,5 +38,30 @@
 		</if>
 		)	
 	</insert>
+	<update id="updateMenu" parameterType="Menu">
+		UPDATE menu SET
+		<if test='parent_menu_cd neq null and parent_menu_cd neq ""'>
+			parent_menu_cd = #{parent_menu_cd},
+		</if>
+		<if test='menu_nm neq null and menu_nm neq ""'>
+			menu_nm = #{menu_nm},
+		</if>
+		<if test='url neq null and url neq ""'>
+			url = #{url},
+		</if>
+		<if test='use_yn neq null and use_yn neq ""'>
+			use_yn = #{use_yn},
+		</if>
+		<if test='ord_no neq null and ord_no neq ""'>
+			ord_no = #{ord_no},
+		</if>
+		<if test='require_auth_yn neq null and require_auth_yn neq ""'>
+			require_auth_yn = #{require_auth_yn},
+		</if>
+		<if test='attr1 neq null and attr1 neq ""'>
+			attr1 = #{attr1}
+		</if>
+		WHERE menu_cd =	#{menu_cd}
+	</update>
 	
 </mapper>
