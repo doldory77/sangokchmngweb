@@ -14,23 +14,23 @@
     <script src="https://unpkg.com/vue-router@4"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!--<script src="/js/home/Home.js"></script>
-    <script src="/js/etc/Temp.js"></script>
-    <script src="/js/util/Comm.js"></script>
-    <script src="/js/comp/FileX.js"></script>
-    <script src="/js/board/Board.js"></script>
+    <script src="/mng/js/util/Comm.js"></script>
+    <script src="/mng/js/comp/FileX.js"></script>
+    <script src="/mng/js/board/BoardRegView.js"></script>
+    <script src="/mng/js/home/Home.js"></script>
+    <script src="/mng/js/menu02/Menu0202.js"></script>
+    <!--<script src="/js/etc/Temp.js"></script>
     <script src="/js/menu01/Menu0101.js"></script>
     <script src="/js/menu01/Menu0102.js"></script>
     <script src="/js/menu01/Menu0103.js"></script>
     <script src="/js/menu02/Menu0201.js"></script>
-    <script src="/js/menu02/Menu0202.js"></script>
     <script src="/js/menu02/Menu0203.js"></script>
     <script src="/js/menu04/Menu0401.js"></script>-->
 </head>
 <body>
-    <div id="app">
+    <div id="app" style="padding-top: 56px;">
 
-        <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container-lg">
                 <a class="navbar-brand" href="#">산곡성결교회</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,7 +74,7 @@
             </div>
         </nav>
         
-        <router-view></router-view> -->
+        <router-view></router-view>
         
     </div>
 
@@ -93,24 +93,25 @@
     const {createApp} = Vue
     const {createRouter, createWebHashHistory} = VueRouter
     
-    // const router = createRouter({
-    //     history: createWebHashHistory(),
-    //     routes: [
-    //         {name:'Home', path:'/', component:Home},
-    //         {name:'Temp', path:'/temp', component:Temp},
-    //         {name:'Menu0101', path:'/menu0101', component:Menu0101},
-    //         {name:'Menu0102', path:'/menu0102', component:Menu0102},
-    //         {name:'Menu0103', path:'/menu0103', component:Menu0103},
-    //         {name:'Menu0201', path:'/menu0201', component:Menu0201},
-    //         {name:'Menu0202', path:'/menu0202', component:Menu0202},
-    //         {name:'Menu0203', path:'/menu0203', component:Menu0203},
-    //         {name:'Menu03', path:'/menu03', component:Temp},
-    //         {name:'Menu0401', path:'/menu0401', component:Menu0401},
+    const router = createRouter({
+        history: createWebHashHistory(),
+        routes: [
+            {name:'Home', path:'/', component:Home},
+            {name:'Home', path:'/board', component:BoardRegView},
+            // {name:'Temp', path:'/temp', component:Temp},
+            // {name:'Menu0101', path:'/menu0101', component:Menu0101},
+            // {name:'Menu0102', path:'/menu0102', component:Menu0102},
+            // {name:'Menu0103', path:'/menu0103', component:Menu0103},
+            // {name:'Menu0201', path:'/menu0201', component:Menu0201},
+            {name:'Menu0202', path:'/menu0202', component:Menu0202},
+            // {name:'Menu0203', path:'/menu0203', component:Menu0203},
+            // {name:'Menu03', path:'/menu03', component:Temp},
+            // {name:'Menu0401', path:'/menu0401', component:Menu0401},
             
-    //     ]
-    // })
+        ]
+    })
     const http = axios.create({
-        baseURL: "http://localhost:8080/back",
+        baseURL: "http://localhost:8080/mng",
     })
 
     const app = createApp({
@@ -140,7 +141,7 @@
     app.config.globalProperties.$http = http
     app.config.globalProperties.$comm = Comm
     app.component('md-file', FileX)
-    // app.use(router)
+    app.use(router)
     app.mount('#app')
 </script>
 </html>
