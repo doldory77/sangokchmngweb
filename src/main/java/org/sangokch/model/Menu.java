@@ -1,5 +1,7 @@
 package org.sangokch.model;
 
+import java.util.List;
+
 public class Menu {
 
 	private String menu_cd;
@@ -9,6 +11,7 @@ public class Menu {
 	private String use_yn;
 	private int ord_no;
 	private String attr1;
+	private List<Menu> subMenu;
 	
 	public String getMenu_cd() {
 		return menu_cd;
@@ -51,5 +54,11 @@ public class Menu {
 	}
 	public void setAttr1(String attr1) {
 		this.attr1 = attr1;
+	}
+	public List<Menu> getSubMenu() {
+		return subMenu;
+	}
+	public void setSubMenu(List<Menu> subMenu) {
+		this.subMenu = subMenu;
 	}
 }

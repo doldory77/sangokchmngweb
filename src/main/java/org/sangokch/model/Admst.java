@@ -1,5 +1,7 @@
 package org.sangokch.model;
 
+import java.util.List;
+
 public class Admst {
 
 	private String id;
@@ -8,6 +10,8 @@ public class Admst {
 	private String use_yn;
 	private String super_yn;
 	private String attr;
+	private List<String> authorities;
+	
 	public String getId() {
 		return id;
 	}
@@ -44,6 +48,10 @@ public class Admst {
 	public void setAttr(String attr) {
 		this.attr = attr;
 	}
-	
-	
+	public List<String> getAuthorities() {
+		return authorities;
+	}
+	public void setAuthorities(List<String> authorities) {
+		this.authorities = authorities;
+	}
 }

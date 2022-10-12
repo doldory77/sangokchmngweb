@@ -22,6 +22,12 @@
 			and use_yn = 'Y'		
 		</if>
 	</select>
+	<select id="selectAuthority" parameterType="Admst" resultType="string">
+		SELECT
+			authority_cd
+		FROM authority
+		WHERE id = #{id}	
+	</select>
 	<insert id="insertAdmst" parameterType="Admst">
 		INSERT INTO admst (
 			id,

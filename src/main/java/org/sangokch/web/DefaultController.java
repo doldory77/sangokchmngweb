@@ -1,5 +1,6 @@
 package org.sangokch.web;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,9 +8,11 @@ import javax.servlet.http.HttpSession;
 
 import org.sangokch.model.Admst;
 import org.sangokch.model.Board;
+import org.sangokch.model.Menu;
 import org.sangokch.model.ResponseData;
 import org.sangokch.service.AdmstService;
 import org.sangokch.service.BoardService;
+import org.sangokch.service.MenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,9 @@ public class DefaultController {
 	
 	@Autowired
 	BoardService boardService;
+	
+	@Autowired
+	MenuService menuService;
 	
 	@RequestMapping("/")
 	public String index(Model model) {
@@ -71,6 +77,15 @@ public class DefaultController {
 		
 		return res;
 		
+	}
+	
+	@RequestMapping("/test")
+	public @ResponseBody ResponseData authMenus() {
+		ResponseData res = new ResponseData();
+		res.setResult("success");
+		List<Menu> authMenus = menuService.selectAuthMenu();
+		res.setData(authMenus);
+		return res;
 	}
 	
 }

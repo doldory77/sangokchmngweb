@@ -21,6 +21,22 @@
 		AND parent_menu_cd = #{parent_menu_cd}	
 		</if>
 	</select>
+	<select id="selectAuthMenu" resultType="Menu">
+		SELECT
+			a.menu_cd,
+			a.parent_menu_cd,
+			a.menu_nm,
+			a.url,
+			a.use_yn,
+			b.ord_no AS p_ord_no,
+			a.ord_no,
+			a.attr1
+		FROM menu a
+			, menu b
+		WHERE a.parent_menu_cd = b.menu_cd
+			AND a.require_auth_yn = 'Y'
+		ORDER BY b.ord_no, a.ord_no	
+	</select>
 	<insert id="insertMenu" parameterType="Menu">
 		INSERT INTO menu (
 			menu_cd,

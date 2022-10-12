@@ -24,7 +24,10 @@ public class AdmstService {
 		if (list == null || list.size() == 0) {
 			throw new RuntimeException("아이디 및 패스워드를 확인해 주세요");
 		}
-		return list.get(0);
+		Admst admst = list.get(0);
+		List<String> authorities = admstMapper.selectAuthority(admst);
+		admst.setAuthorities(authorities);
+		return admst;
 		
 	}
 }

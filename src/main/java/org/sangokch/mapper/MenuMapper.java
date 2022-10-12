@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface MenuMapper {
 	public List<Menu> selectMenu(Map<String, String> params);
+	public List<Menu> selectAuthMenu();
 	public void insertMenu(Menu menu);
 	public void updateMenu(Menu menu);
 }

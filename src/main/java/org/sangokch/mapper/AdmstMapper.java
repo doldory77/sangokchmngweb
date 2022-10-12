@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface AdmstMapper {
 	public List<Admst> selectAdmstList(Map<String, String> params);
+	public List<String> selectAuthority(Admst admst);
 	public void insertAdmst(Admst admst);
 	public void updateAdmst(Admst admst);
 }
