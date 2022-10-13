@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>관리자</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" type="text/css" href="/css/style.css"> -->
+    <link rel="stylesheet" type="text/css" href="/mng/css/style.css">
     <script src="https://unpkg.com/vue@3"></script>
     <script src="https://unpkg.com/vue-router@4"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -31,7 +31,7 @@
 <body>
     <div id="app" style="padding-top: 56px;">
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top sg-navbar">
             <div class="container-lg">
                 <a class="navbar-brand" href="#">산곡성결교회</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,6 +78,9 @@
         <router-view></router-view>
         
     </div>
+
+    <!-- <div class="sg-divider my-5"></div> -->
+    <hr class="sg-line-divider">
 
     <footer class="text-muted py-5">
         <div class="container">

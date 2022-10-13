@@ -58,29 +58,41 @@ const BoardRegView = {
         }
     },
     template: `
-    <form class="p-2" @submit.prevent="formSubmit">
-        <fieldset>
-            <legend>About 게시판!</legend>
-            <div class="row g-3 mb-3">
-                <label for="inputSubject" class="col-sm-2 col-form-label">제목</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="subject" id="inputSubject"> 
-                </div>
+    <div class="container">
+        <div class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm" style="background-color: rgb(111, 66, 193);">
+            <img class="me-3" src="https://getbootstrap.kr/docs/5.2/assets/brand/bootstrap-logo-white.svg" alt="" width="48" height="38">
+            <div class="lh-1">
+                <h1 class="h6 mb-0 text-white lh-1">Bootstrap</h1>
+                <small>Since 2011</small>
             </div>
-            <div class="row g-3 mb-3">
-                <label for="inputContent" class="col-sm-2 col-form-label">내용</label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" v-model="content" id="inputContent" rows="3"></textarea>
+        </div>
+
+        <form class="p-2" @submit.prevent="formSubmit">
+            <fieldset>
+                <legend></legend>
+                <div class="row g-2 mb-3">
+                    <label for="inputSubject" class="col-sm-2 col-form-label">제목</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" v-model="subject" id="inputSubject"> 
+                    </div>
                 </div>
-            </div>
-            <md-file title="첨부파일1" @setFile="setFile1">
-                <div class="position-absolute top-0 start-50 translate-middle-x">{{ this.attchFile1Name }}</div>
-            </md-file>
-            <md-file title="첨부파일2" @setFile="setFile2">
-                <div class="position-absolute top-0 start-50 translate-middle-x">{{ this.attchFile2Name }}</div>
-            </md-file>
-            <button type="submit" class="btn btn-primary">저장</button>
-        </fieldset>
-    </form>
+                <div class="row g-2 mb-3">
+                    <label for="inputContent" class="col-sm-2 col-form-label">내용</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" v-model="content" id="inputContent" rows="3"></textarea>
+                    </div>
+                </div>
+                <md-file title="첨부파일1" @setFile="setFile1">
+                    <div class="position-absolute top-0 start-50 translate-middle-x">{{ this.attchFile1Name }}</div>
+                </md-file>
+                <md-file title="첨부파일2" @setFile="setFile2">
+                    <div class="position-absolute top-0 start-50 translate-middle-x">{{ this.attchFile2Name }}</div>
+                </md-file>
+                <div class="d-grid col-6 mx-auto mt-5">
+                    <button type="submit" class="btn btn-primary px-3">저장</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
     `
 }

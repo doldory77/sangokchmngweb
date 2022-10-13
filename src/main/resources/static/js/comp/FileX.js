@@ -32,13 +32,13 @@ const FileX = {
         }
     },
     template: `
-    <div class="row g-3 mb-3">
-        <label for="inputFile" class="col-sm-2 col-form-label">{{ title }}</label>
-        <div class="col-sm-5">
+    <div class="row g-2 mb-3">
+        <label for="inputFile" class="col-md-2 col-form-label">{{ title }}</label>
+        <div class="col-md-5">
             <input type="file" class="form-control" id="inputFile" ref="selectFile" @change="previewFile" />
         </div>
-        <div class="col-sm-5 position-relative">
-            <img class="rounded mx-auto d-block" style="max-width:200px;" v-if="previewImgUrl" :src="previewImgUrl" />
+        <div class="col-md-5 mt-md-1 mt-sm-3 position-relative">
+            <img class="rounded mx-auto d-block shadow-sm" style="max-width:200px;" v-if="previewImgUrl" :src="previewImgUrl" />
             <slot></slot>
         </div>
     </div>
