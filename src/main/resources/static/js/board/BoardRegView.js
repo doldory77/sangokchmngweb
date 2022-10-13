@@ -11,7 +11,8 @@ const BoardRegView = {
         }
     },
     created() {
-        this.boardKind = this.$route.query.boardKind
+        this.boardKind = this.$route.query.kind
+        console.log('this.boardKind: ', this.boardKind)
     },
     methods: {
         setFile1(arr) {

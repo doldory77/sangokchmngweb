@@ -16,6 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/mng/js/util/Comm.js"></script>
     <script src="/mng/js/comp/FileX.js"></script>
+    <script src="/mng/js/board/BoardItemView.js"></script>
     <script src="/mng/js/board/BoardRegView.js"></script>
     <script src="/mng/js/home/Home.js"></script>
     <script src="/mng/js/menu02/Menu0202.js"></script>
@@ -97,7 +98,7 @@
         history: createWebHashHistory(),
         routes: [
             {name:'Home', path:'/', component:Home},
-            {name:'Home', path:'/board', component:BoardRegView},
+            {name:'Board', path:'/board', component:BoardRegView},
             // {name:'Temp', path:'/temp', component:Temp},
             // {name:'Menu0101', path:'/menu0101', component:Menu0101},
             // {name:'Menu0102', path:'/menu0102', component:Menu0102},
@@ -141,6 +142,7 @@
     app.config.globalProperties.$http = http
     app.config.globalProperties.$comm = Comm
     app.component('md-file', FileX)
+    app.component('bd-item', BoardItemView)
     app.use(router)
     app.mount('#app')
 </script>
