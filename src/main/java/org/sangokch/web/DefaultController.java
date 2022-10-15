@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.sangokch.model.Admst;
+import org.sangokch.model.AttchFile;
 import org.sangokch.model.Board;
 import org.sangokch.model.Menu;
 import org.sangokch.model.ResponseData;
@@ -38,6 +39,10 @@ public class DefaultController {
 	@Autowired
 	MenuService menuService;
 	
+	private ResponseData getRes(String initResult) {
+		return new ResponseData(initResult);
+	}
+	
 	@RequestMapping("/")
 	public String index(Model model, HttpServletRequest request) {
 //		logger.info(System.getProperty("user.dir"));
@@ -53,8 +58,7 @@ public class DefaultController {
 	@RequestMapping("/doLogin")
 	public @ResponseBody ResponseData doLogin(@RequestBody Map<String, String> params, HttpServletRequest request) {
 		logger.info("id: {}, passwd: {}", params.get("id"), params.get("passwd"));
-		ResponseData res = new ResponseData();
-		res.setResult("success");
+		ResponseData res = getRes("success");
 		
 		Admst admst = admstService.loginAdmst(params);
 		logger.info(admst.getId());
@@ -71,13 +75,12 @@ public class DefaultController {
 			@RequestParam(required=false) MultipartFile[] files,
 			@RequestParam(required=false) String[] fileNames) {
 		
-		ResponseData res = new ResponseData();
-		res.setResult("success");
-		
+		ResponseData res = getRes("success");
+		logger.info("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx {}", board.getBno());
 		if (board.getBno() <= 0) {			
 			boardService.insertBoard(board, files, fileNames);
 		} else {
-			logger.info("보드 업데이트는 아직 만들지 않음");
+			boardService.updateBoard(board, files, fileNames);
 		}
 		
 		return res;
@@ -86,19 +89,24 @@ public class DefaultController {
 	
 	@RequestMapping("/board/select")
 	public @ResponseBody ResponseData select(@RequestBody Map<String, Object> params) {
-		logger.info("{}", params);
-		ResponseData res = new ResponseData();
-		res.setResult("success");
+		ResponseData res = getRes("success");
 		List<Board> boards = boardService.selectBoard(params);
 		
 		res.setData(boards);
 		return res;
 	}
 	
+	@RequestMapping("/board/deleteAttch")
+	public @ResponseBody ResponseData deleteAttch(@RequestBody AttchFile file) {
+		if (boardService.deleteAttchFile(file) > 0) {
+			return getRes("success");
+		}
+		throw new RuntimeException("삭제된 파일이 없습니다.");
+	}
+	
 	@RequestMapping("/test")
 	public @ResponseBody ResponseData authMenus() {
-		ResponseData res = new ResponseData();
-		res.setResult("success");
+		ResponseData res = getRes("success");
 		List<Menu> authMenus = menuService.selectAuthMenu();
 		res.setData(authMenus);
 		return res;

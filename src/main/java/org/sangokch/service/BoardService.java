@@ -9,6 +9,7 @@ import org.sangokch.mapper.BoardMapper;
 import org.sangokch.model.AttchFile;
 import org.sangokch.model.Board;
 import org.sangokch.util.Const;
+import org.sangokch.util.MapX;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,17 +40,19 @@ public class BoardService {
 		try {
 			boardMapper.insertBoard(board);
 			System.out.println(board.getBno());
-			for (int i=0; i<files.length; i++) {
+			if (files != null && files.length > 0) {				
+				for (int i=0; i<files.length; i++) {
 //				if (i==1) throw new Exception("일부로 오류 발생시킴");
-				AttchFile file = new AttchFile();
-				file.setBno(board.getBno());
-				file.setFile_nm(fileNames[i]);
-				file.setFile_path(Const.userDir.concat(filePath));
-				file.setFile_org_nm(files[i].getOriginalFilename());
-				boardMapper.insertFile(file);
-				File saveFile = new File(file.getFile_path(), file.getFile_nm());
-				files[i].transferTo(saveFile);
-				savedFileList.add(saveFile);
+					AttchFile file = new AttchFile();
+					file.setBno(board.getBno());
+					file.setFile_nm(fileNames[i]);
+					file.setFile_path(Const.userDir.concat(filePath));
+					file.setFile_org_nm(files[i].getOriginalFilename());
+					boardMapper.insertFile(file);
+					File saveFile = new File(file.getFile_path(), file.getFile_nm());
+					files[i].transferTo(saveFile);
+					savedFileList.add(saveFile);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("insertBoard Error : ", e);
@@ -66,14 +69,53 @@ public class BoardService {
 			boards = boardMapper.selectBoard(params);
 			for (int i=0; i<boards.size(); i++) {
 				Board board = boards.get(i);
-				logger.info("bno: {}", board.getBno());
-				List<AttchFile> files = boardMapper.selectAttchFile(board);
+				List<AttchFile> files = boardMapper.selectAttchFile(new MapX("bno", board.getBno()).getMap());
 				boards.get(i).setFiles(files);
 			}
 		} else {
 			boards = new ArrayList<Board>();
 		}
 		return boards;
+	}
+	
+	@Transactional
+	public void updateBoard(Board board, MultipartFile[] files, String[] fileNames) {
+		List<File> savedFileList = new ArrayList<>();
+		try {
+			boardMapper.updateBoard(board);
+			System.out.println(board.getBno());
+			if (files != null && files.length > 0) {				
+				for (int i=0; i<files.length; i++) {
+//				if (i==1) throw new Exception("일부로 오류 발생시킴");
+					AttchFile file = new AttchFile();
+					file.setBno(board.getBno());
+					file.setFile_nm(fileNames[i]);
+					file.setFile_path(Const.userDir.concat(filePath));
+					file.setFile_org_nm(files[i].getOriginalFilename());
+					boardMapper.insertFile(file);
+					File saveFile = new File(file.getFile_path(), file.getFile_nm());
+					files[i].transferTo(saveFile);
+					savedFileList.add(saveFile);
+				}
+			}
+		} catch (Exception e) {
+			logger.error("insertBoard Error : ", e);
+			for (File file: savedFileList) {
+				file.delete();
+			}
+			throw new RuntimeException(e.getMessage());
+		}
+		
+	}
+	
+	public int deleteAttchFile(AttchFile attchFile) {
+		List<AttchFile> files = boardMapper.selectAttchFile(new MapX("bno", attchFile.getBno()).put("file_nm", attchFile.getFile_nm()).getMap());
+		AttchFile file = files.get(0);
+		int result = boardMapper.deleteFile(file);
+		if (result > 0) {
+			new File(file.getFile_path(), file.getFile_nm()).delete();
+		}
+		return result;
 	}
 	
 	

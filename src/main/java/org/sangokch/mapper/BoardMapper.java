@@ -12,8 +12,9 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface BoardMapper {
 	public List<Board> selectBoard(Map<String, Object> params);
-	public List<AttchFile> selectAttchFile(Board board);
+	public List<AttchFile> selectAttchFile(Map<String, Object> params);
 	public void insertBoard(Board board);
-	public void updateBoard(Board board);
+	public int updateBoard(Board board);
 	public void insertFile(AttchFile file);
+	public int deleteFile(AttchFile file);
 }

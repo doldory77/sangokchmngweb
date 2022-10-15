@@ -5,9 +5,9 @@ const BoardRegView = {
             bno:0,
             subject: '',
             content: '', 
-            attchFile1: null,
+            attchFile1: '',
             attchFile1Name: '',
-            attchFile2: null,
+            attchFile2: '',
             attchFile2Name: '',
             linkUrl:'',
             write_dt:'',
@@ -57,7 +57,7 @@ const BoardRegView = {
         async formSubmit() {
             let form = new FormData()
             form.append('kind_cd', this.boardKind)
-            if (!this.bno) {
+            if (this.bno) {
                 form.append("bno", this.bno);
             }
             if (!this.subject) {
@@ -97,7 +97,26 @@ const BoardRegView = {
             }
         },
         deleteFile(fileName) {
-            alert(fileName);
+            if (confirm('삭제하시겠습니까?')) {
+                (async function(that, file_nm){
+                    try {
+                        const result = await that.$http.post("/board/deleteAttch", {bno:that.bno, file_nm:file_nm}, {
+                            headers: {
+                                "Content-Type": "application/json",
+                            }
+                        })
+                        console.log(result)
+                        if (result.data && result.data.result == 'success') {
+                            alert('완료되었습니다.')
+                            that.$router.go();
+                        }
+                        
+                    } catch (err) {
+                        console.error(err)
+                        alert(err.response.data.msg)
+                    }
+                })(this, fileName)
+            }
         } 
     },
     template: `

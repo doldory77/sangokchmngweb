@@ -30,7 +30,7 @@
 			AND kind_cd = #{kind_cd}
 		</if>		
 	</select>
-	<select id="selectAttchFile" parameterType="Board" resultType="AttchFile">
+	<select id="selectAttchFile" parameterType="hashmap" resultType="AttchFile">
 		SELECT
 			bno,
 			file_nm,
@@ -38,6 +38,9 @@
 			file_path
 		FROM file
 		WHERE bno = #{bno}
+		<if test='file_nm neq null and file_nm neq ""'>
+			AND file_nm = #{file_nm}
+		</if>
 	</select>
 	<insert id="insertBoard" parameterType="Board" useGeneratedKeys="true" keyProperty="bno">
 		INSERT INTO board (
@@ -103,4 +106,7 @@
 			,#{file_path}
 		)	
 	</insert>
+	<delete id="deleteFile" parameterType="AttchFile">
+		DELETE FROM file WHERE bno = #{bno} and file_nm = #{file_nm}
+	</delete>
 </mapper>
