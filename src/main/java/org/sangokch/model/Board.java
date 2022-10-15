@@ -6,6 +6,7 @@ public class Board {
 	public String kind_cd;
 	public String subject;
 	public String content;
+	public String tag_yn;
 	public String link_url;
 	public int view_cnt;
 	public String use_yn;
@@ -31,6 +32,12 @@ public class Board {
 	}
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+	public String getTag_yn() {
+		return tag_yn;
+	}
+	public void setTag_yn(String tag_yn) {
+		this.tag_yn = tag_yn;
 	}
 	public String getContent() {
 		return content;

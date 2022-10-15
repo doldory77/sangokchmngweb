@@ -7,6 +7,7 @@ import java.util.List;
 import org.sangokch.mapper.BoardMapper;
 import org.sangokch.model.AttchFile;
 import org.sangokch.model.Board;
+import org.sangokch.util.Const;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +39,11 @@ public class BoardService {
 			boardMapper.insertBoard(board);
 			System.out.println(board.getBno());
 			for (int i=0; i<files.length; i++) {
-				if (i==1) throw new Exception("일부로 오류 발생시킴");
+//				if (i==1) throw new Exception("일부로 오류 발생시킴");
 				AttchFile file = new AttchFile();
 				file.setBno(board.getBno());
 				file.setFile_nm(fileNames[i]);
-				file.setFile_path(filePath);
+				file.setFile_path(Const.userDir.concat(filePath));
 				file.setFile_org_nm(files[i].getOriginalFilename());
 				boardMapper.insertFile(file);
 				File saveFile = new File(file.getFile_path(), file.getFile_nm());

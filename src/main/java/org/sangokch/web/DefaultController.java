@@ -39,8 +39,9 @@ public class DefaultController {
 	MenuService menuService;
 	
 	@RequestMapping("/")
-	public String index(Model model) {
-				
+	public String index(Model model, HttpServletRequest request) {
+//		logger.info(System.getProperty("user.dir"));
+//		logger.info(request.getSession().getServletContext().getRealPath("/"));
 		return "index";
 	}
 	
@@ -64,7 +65,7 @@ public class DefaultController {
 		return res;
 	}
 	
-	@RequestMapping("/upload")
+	@RequestMapping("/board/save")
 	public @ResponseBody ResponseData upload(
 			Board board,
 			@RequestParam(required=false) MultipartFile[] files,
@@ -73,7 +74,11 @@ public class DefaultController {
 		ResponseData res = new ResponseData();
 		res.setResult("success");
 		
-		boardService.insertBoard(board, files, fileNames);
+		if (board.getBno() <= 0) {			
+			boardService.insertBoard(board, files, fileNames);
+		} else {
+			logger.info("보드 업데이트는 아직 만들지 않음");
+		}
 		
 		return res;
 		

@@ -8,6 +8,7 @@ const BoardRegView = {
             attchFile1Name: '',
             attchFile2: null,
             attchFile2Name: '',
+            linkUrl:''
         }
     },
     created() {
@@ -17,11 +18,11 @@ const BoardRegView = {
     methods: {
         setFile1(arr) {
             this.attchFile1 = arr[0]
-            this.attchFile1Name = this.boardKind + arr[1]
+            this.attchFile1Name = this.boardKind + '_' + arr[1]
         },
         setFile2(arr) {
             this.attchFile2 = arr[0]
-            this.attchFile2Name = this.boardKind + arr[1]
+            this.attchFile2Name = this.boardKind + '_' + arr[1]
         },
         async formSubmit() {
             let form = new FormData()
@@ -36,6 +37,7 @@ const BoardRegView = {
                 return
             }
             form.append("content", this.content)
+            if (this.linkUrl) form.append("link_url", this.linkUrl)
             if (this.attchFile1) {
                 form.append("files", this.attchFile1)
                 form.append("fileNames", this.attchFile1Name)
@@ -45,12 +47,17 @@ const BoardRegView = {
                 form.append("fileNames", this.attchFile2Name)
             }
             try {
-                const result = await this.$http.post("/upload", form, {
+                const result = await this.$http.post("/board/save", form, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
                 })
                 console.log(result)
+                if (result.data && result.data.result == 'success') {
+                    if (confirm('정상 완료 되었습니다.')) {
+                        this.$router.replace('Menu0202')
+                    }
+                }
             } catch (err) {
                 console.error(err)
                 alert(err.response.data.msg)
@@ -80,6 +87,12 @@ const BoardRegView = {
                     <label for="inputContent" class="col-sm-2 col-form-label">내용</label>
                     <div class="col-sm-10">
                         <textarea class="form-control" v-model="content" id="inputContent" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="row g-2 mb-3">
+                    <label for="inputLinkUrl" class="col-sm-2 col-form-label">Link</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" v-model="linkUrl" id="inputLinkUrl"> 
                     </div>
                 </div>
                 <md-file title="첨부파일1" @setFile="setFile1">
