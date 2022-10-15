@@ -27,13 +27,14 @@ public class ManagerwebApplication extends SpringBootServletInitializer implemen
 					,"/test"
 					,"/js/**"
 					,"/css/**"
+					,"/file/**"
 					,"/img/**");
 	}
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
-		registry.addResourceHandler("/**").addResourceLocations("classpath:/public/");
+		registry.addResourceHandler("/file/**").addResourceLocations("classpath:/public/");
 	}
 	
 	public static void main(String[] args) {

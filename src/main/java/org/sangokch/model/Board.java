@@ -1,5 +1,7 @@
 package org.sangokch.model;
 
+import java.util.List;
+
 public class Board {
 
 	public int bno;
@@ -14,6 +16,7 @@ public class Board {
 	public String write_dt;
 	public String modifier;
 	public String modified_dt;
+	public List<AttchFile> files;
 	
 	public int getBno() {
 		return bno;
@@ -86,6 +89,12 @@ public class Board {
 	}
 	public void setModified_dt(String modified_dt) {
 		this.modified_dt = modified_dt;
+	}
+	public List<AttchFile> getFiles() {
+		return files;
+	}
+	public void setFiles(List<AttchFile> files) {
+		this.files = files;
 	}
 	
 	

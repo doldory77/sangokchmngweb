@@ -2,18 +2,48 @@ const BoardRegView = {
     data() {
         return {
             boardKind: '',
+            bno:0,
             subject: '',
             content: '', 
             attchFile1: null,
             attchFile1Name: '',
             attchFile2: null,
             attchFile2Name: '',
-            linkUrl:''
+            linkUrl:'',
+            write_dt:'',
+            writer:'',
+            use_yn:'',
+            savedFiles: [],
         }
     },
     created() {
         this.boardKind = this.$route.query.kind
-        console.log('this.boardKind: ', this.boardKind)
+        this.bno = this.$route.query.bno;
+        console.log('this.boardKind: ', this.boardKind, 'this.bno: ', this.bno)
+        if (this.bno) {
+            (async function(that){
+                try {
+                    const result = await that.$http.post("/board/select", {bno:that.bno}, {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
+                    console.log(result)
+                    if (result.data.result === 'success') {
+                        that.subject = result.data.data[0].subject
+                        that.content = result.data.data[0].content
+                        that.linkUrl = result.data.data[0].link_url
+                        that.write_dt = result.data.data[0].write_dt
+                        that.writer = result.data.data[0].writer
+                        that.use_yn = result.data.data[0].use_yn
+                        that.savedFiles = result.data.data[0].files
+                    }
+                } catch (err) {
+                    console.error(err)
+            
+                }
+            })(this)
+        }
     },
     methods: {
         setFile1(arr) {
@@ -27,6 +57,9 @@ const BoardRegView = {
         async formSubmit() {
             let form = new FormData()
             form.append('kind_cd', this.boardKind)
+            if (!this.bno) {
+                form.append("bno", this.bno);
+            }
             if (!this.subject) {
                 alert('제목은 필수항목입니다.');
                 return
@@ -62,7 +95,10 @@ const BoardRegView = {
                 console.error(err)
                 alert(err.response.data.msg)
             }
-        }
+        },
+        deleteFile(fileName) {
+            alert(fileName);
+        } 
     },
     template: `
     <div class="container">
@@ -106,6 +142,12 @@ const BoardRegView = {
                 </div>
             </fieldset>
         </form>
+        <div class="d-flex" v-if="savedFiles.length > 0">
+            <div class="position-relative rounded shadow-sm align-self-center m-2 p-1" style="min-width:100px; max-width:200px;" v-for="(img, idx) in savedFiles" :key="idx">
+                <img class="w-100" :src="'/mng/file/'+img.file_nm">
+                <button @click="deleteFile(img.file_nm)" type="button" class="btn-close position-absolute top-0 end-0 mt-2 me-2" aria-label="Close"></button>
+            </div>
+        </div>
     </div>
     `
 }

@@ -66,7 +66,7 @@ public class DefaultController {
 	}
 	
 	@RequestMapping("/board/save")
-	public @ResponseBody ResponseData upload(
+	public @ResponseBody ResponseData save(
 			Board board,
 			@RequestParam(required=false) MultipartFile[] files,
 			@RequestParam(required=false) String[] fileNames) {
@@ -82,6 +82,17 @@ public class DefaultController {
 		
 		return res;
 		
+	}
+	
+	@RequestMapping("/board/select")
+	public @ResponseBody ResponseData select(@RequestBody Map<String, Object> params) {
+		logger.info("{}", params);
+		ResponseData res = new ResponseData();
+		res.setResult("success");
+		List<Board> boards = boardService.selectBoard(params);
+		
+		res.setData(boards);
+		return res;
 	}
 	
 	@RequestMapping("/test")

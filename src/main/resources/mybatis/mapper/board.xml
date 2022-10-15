@@ -6,6 +6,7 @@
 	<select id="selectBoard" parameterType="hashmap" resultType="Board">
 		SELECT
 			a.kind_cd,
+			a.bno,
 			b.menu_nm,
 			a.subject,
 			a.content,
@@ -19,7 +20,24 @@
 		FROM board a
 			, menu b
 		WHERE a.kind_cd = b.menu_cd
-			AND bno = #{bno}		
+		<if test='use_yn neq null and use_yn neq ""'>
+			AND use_yn = #{use_yn}
+		</if>
+		<if test='bno neq null and bno gt 0'>
+			AND bno = #{bno}
+		</if>
+		<if test='kind_cd neq null and kind_cd neq ""'>
+			AND kind_cd = #{kind_cd}
+		</if>		
+	</select>
+	<select id="selectAttchFile" parameterType="Board" resultType="AttchFile">
+		SELECT
+			bno,
+			file_nm,
+			file_org_nm,
+			file_path
+		FROM file
+		WHERE bno = #{bno}
 	</select>
 	<insert id="insertBoard" parameterType="Board" useGeneratedKeys="true" keyProperty="bno">
 		INSERT INTO board (

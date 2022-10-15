@@ -3,6 +3,7 @@ package org.sangokch.service;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.sangokch.mapper.BoardMapper;
 import org.sangokch.model.AttchFile;
@@ -58,5 +59,22 @@ public class BoardService {
 			throw new RuntimeException(e.getMessage());
 		}
 	}
+	
+	public List<Board> selectBoard(Map<String, Object> params) {
+		List<Board> boards = null; 
+		if (params.containsKey("bno") || params.containsKey("kind_cd")) {
+			boards = boardMapper.selectBoard(params);
+			for (int i=0; i<boards.size(); i++) {
+				Board board = boards.get(i);
+				logger.info("bno: {}", board.getBno());
+				List<AttchFile> files = boardMapper.selectAttchFile(board);
+				boards.get(i).setFiles(files);
+			}
+		} else {
+			boards = new ArrayList<Board>();
+		}
+		return boards;
+	}
+	
 	
 }

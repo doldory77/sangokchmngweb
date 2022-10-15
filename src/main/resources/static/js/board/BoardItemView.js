@@ -22,7 +22,7 @@ const BoardItemView = {
         <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
             <div class="d-flex justify-content-between">
                 <strong class="text-gray-dark">{{ subject }}</strong>
-                <router-link :to="{name: 'Board', query: {kind:this.kind, bno:this.bno}}">상세보기</router-link>
+                <router-link :to="{name: 'Board', query: {kind:this.kind, bno:this.bno}}">{{bno}}</router-link>
                 <!--<a href="/board" class="">상세보기</a>-->
             </div>
              <span class="d-block">{{ content }}</span>
