@@ -4,34 +4,51 @@ const Menu0202 = {
         boardItems:[]
       }
     },
+    created() {
+      (async function(that){
+        try {
+            const result = await that.$http.post("/board/select", {kind_cd:'MENU0202', pageno:'1'}, {
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            })
+            console.log(result)
+            if (result.data && result.data.result == 'success') {
+              that.boardItems = result.data.data
+            }
+            
+        } catch (err) {
+            console.error(err)
+            alert(err.response.data.msg)
+        }
+      })(this)
+    },
     mounted() {
-      for(i=0; i<10; i++) {
-        this.boardItems.push({bno:i+1, subject:i+'제목', content:i+'내용'})
-      }
+      
     },
     template: `
     <main class="container">
-    <div class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm" style="background-color: #6f42c1;">
-      <img class="me-3" src="https://getbootstrap.kr/docs/5.2/assets/brand/bootstrap-logo-white.svg" alt="" width="48" height="38">
-      <div class="lh-1">
-        <h1 class="h6 mb-0 text-white lh-1">Bootstrap</h1>
-        <small>Since 2011</small>
+      <div class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm" style="background-color: #6f42c1;">
+        <img class="me-3" src="https://getbootstrap.kr/docs/5.2/assets/brand/bootstrap-logo-white.svg" alt="" width="48" height="38">
+        <div class="lh-1">
+          <h1 class="h6 mb-0 text-white lh-1">Bootstrap</h1>
+          <small>Since 2011</small>
+        </div>
+        <div class="ms-auto">
+          <router-link class="btn btn-outline-light" :to="{name: 'Board', query: {kind:'MENU0202', bno:''}}">등록</router-link>
+        </div>
       </div>
-      <div class="ms-auto">
-        <router-link class="btn btn-outline-light" :to="{name: 'Board', query: {kind:'MENU0202', bno:''}}">등록</router-link>
-      </div>
-    </div>
-  
-    <div class="my-3 p-3 bg-body rounded shadow-sm">
-      <h6 class="border-bottom pb-2 mb-0">Suggestions</h6>
-      
-      <bd-item v-for="item in boardItems" :key="item.bno" :kind="'MENU0202'" :bno="19" :subject="item.subject" :content="item.content"></bd-item>
+    
+      <div class="my-3 p-3 bg-body rounded shadow-sm">
+        <h6 class="border-bottom pb-2 mb-0">Suggestions</h6>
+        
+        <bd-item v-for="item in boardItems" :key="item.bno" :kind="'MENU0202'" :bno="item.bno" :subject="item.subject" :content="item.content"></bd-item>
 
-      <small class="d-block text-end mt-3">
-        <a href="#">All suggestions</a>
-      </small>
-    </div>
-  </main>
+        <small class="d-block text-end mt-3">
+          <a href="#">All suggestions</a>
+        </small>
+      </div>
+    </main>
     `
 }
 

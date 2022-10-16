@@ -16,7 +16,7 @@ public class Board {
 	public String write_dt;
 	public String modifier;
 	public String modified_dt;
-	public List<AttchFile> files;
+	public List<AttchFile> attchFiles;
 	
 	public int getBno() {
 		return bno;
@@ -90,11 +90,11 @@ public class Board {
 	public void setModified_dt(String modified_dt) {
 		this.modified_dt = modified_dt;
 	}
-	public List<AttchFile> getFiles() {
-		return files;
+	public List<AttchFile> getAttchFiles() {
+		return attchFiles;
 	}
-	public void setFiles(List<AttchFile> files) {
-		this.files = files;
+	public void setAttchFiles(List<AttchFile> attchFiles) {
+		this.attchFiles = attchFiles;
 	}
 	
 	

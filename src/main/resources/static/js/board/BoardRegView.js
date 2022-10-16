@@ -36,7 +36,7 @@ const BoardRegView = {
                         that.write_dt = result.data.data[0].write_dt
                         that.writer = result.data.data[0].writer
                         that.use_yn = result.data.data[0].use_yn
-                        that.savedFiles = result.data.data[0].files
+                        that.savedFiles = result.data.data[0].attchFiles
                     }
                 } catch (err) {
                     console.error(err)
@@ -79,6 +79,7 @@ const BoardRegView = {
                 form.append("files", this.attchFile2)
                 form.append("fileNames", this.attchFile2Name)
             }
+            form.append("attchFiles", [])
             try {
                 const result = await this.$http.post("/board/save", form, {
                     headers: {

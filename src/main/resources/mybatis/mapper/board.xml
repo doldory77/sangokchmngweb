@@ -4,7 +4,7 @@
                         
 <mapper namespace="org.sangokch.mapper.BoardMapper">
 	<select id="selectBoard" parameterType="hashmap" resultType="Board">
-		SELECT
+		SELECT SQL_CALC_FOUND_ROWS
 			a.kind_cd,
 			a.bno,
 			b.menu_nm,
@@ -28,7 +28,14 @@
 		</if>
 		<if test='kind_cd neq null and kind_cd neq ""'>
 			AND kind_cd = #{kind_cd}
-		</if>		
+		</if>
+		ORDER BY bno desc
+		<if test='pageno neq null and pageno neq ""'>
+		LIMIT #{limit} OFFSET #{offset}
+		</if>				
+	</select>
+	<select id="selectBoardTotalCnt" resultType="int">
+		SELECT FOUND_ROWS() AS totalCnt
 	</select>
 	<select id="selectAttchFile" parameterType="hashmap" resultType="AttchFile">
 		SELECT

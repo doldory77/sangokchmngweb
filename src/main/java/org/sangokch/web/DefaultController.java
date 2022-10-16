@@ -14,6 +14,7 @@ import org.sangokch.model.ResponseData;
 import org.sangokch.service.AdmstService;
 import org.sangokch.service.BoardService;
 import org.sangokch.service.MenuService;
+import org.sangokch.util.Const;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,7 @@ public class DefaultController {
 			@RequestParam(required=false) String[] fileNames) {
 		
 		ResponseData res = getRes("success");
-		logger.info("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx {}", board.getBno());
+		
 		if (board.getBno() <= 0) {			
 			boardService.insertBoard(board, files, fileNames);
 		} else {
@@ -90,9 +91,21 @@ public class DefaultController {
 	@RequestMapping("/board/select")
 	public @ResponseBody ResponseData select(@RequestBody Map<String, Object> params) {
 		ResponseData res = getRes("success");
+		int offset = -1;
+		if (params.containsKey("pageno")) {
+			offset = (Integer.parseInt(params.get("pageno").toString()) - 1) * Const.rowPerPage;
+			logger.info("limit: {}, offset: {}", Const.rowPerPage, offset);
+			params.put("limit", Const.rowPerPage);
+			params.put("offset", offset);
+		}
 		List<Board> boards = boardService.selectBoard(params);
 		
 		res.setData(boards);
+		if (params.containsKey("pageno")) {
+			res.setPageno(params.get("pageno").toString());
+			res.setNextYn(boardService.selectBoardTotalCnt() > offset * Const.rowPerPage ? "Y" : "N");
+		}
+		
 		return res;
 	}
 	

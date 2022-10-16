@@ -1,10 +1,12 @@
 package org.sangokch.model;
 
 public class ResponseData {
-	public String code;
-	public String result;
-	public String msg;
-	public Object data;
+	private String code;
+	private String result;
+	private String msg;
+	private Object data;
+	private String pageno;
+	private String nextYn = "N";
 	public ResponseData(String result) {
 		this.result = result;
 	}
@@ -35,6 +37,24 @@ public class ResponseData {
 	}
 	public ResponseData setData(Object data) {
 		this.data = data;
+		return this;
+	}
+
+	public String getPageno() {
+		return pageno;
+	}
+
+	public ResponseData setPageno(String pageno) {
+		this.pageno = pageno;
+		return this;
+	}
+
+	public String getNextYn() {
+		return nextYn;
+	}
+
+	public ResponseData setNextYn(String nextYn) {
+		this.nextYn = nextYn;
 		return this;
 	}
 	

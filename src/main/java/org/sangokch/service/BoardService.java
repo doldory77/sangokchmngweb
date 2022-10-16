@@ -70,12 +70,16 @@ public class BoardService {
 			for (int i=0; i<boards.size(); i++) {
 				Board board = boards.get(i);
 				List<AttchFile> files = boardMapper.selectAttchFile(new MapX("bno", board.getBno()).getMap());
-				boards.get(i).setFiles(files);
+				boards.get(i).setAttchFiles(files);
 			}
 		} else {
 			boards = new ArrayList<Board>();
 		}
 		return boards;
+	}
+	
+	public int selectBoardTotalCnt() {
+		return boardMapper.selectBoardTotalCnt();
 	}
 	
 	@Transactional
