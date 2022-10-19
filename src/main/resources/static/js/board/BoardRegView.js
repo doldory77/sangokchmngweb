@@ -45,6 +45,11 @@ const BoardRegView = {
             })(this)
         }
     },
+    computed: {
+        useYn() {
+            if (this.use_yn == 'Y') { return true } else { return false }
+        }
+    },
     methods: {
         setFile1(arr) {
             this.attchFile1 = arr[0]
@@ -151,6 +156,15 @@ const BoardRegView = {
                         <input type="text" class="form-control" v-model="linkUrl" id="inputLinkUrl"> 
                     </div>
                 </div>
+                <div class="row g-2 mb-3">
+                    <span class="col-sm-2 col-form-label"></span>
+                    <div class="col-sm-10">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" ref="sw" type="checkbox" role="switch" id="flexSwitchCheckDefault" :checked="use_yn == 'Y' ? true : false" @change="use_yn = ($refs.sw.checked == true ? 'Y' : 'N')">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">{{ use_yn == 'Y' ? '개시판 노출' : '게시판 비노출' }}</label>
+                        </div> 
+                    </div>
+                </div>
                 <md-file title="첨부파일1" @setFile="setFile1">
                     <div class="position-absolute top-0 start-50 translate-middle-x">{{ this.attchFile1Name }}</div>
                 </md-file>
@@ -162,8 +176,8 @@ const BoardRegView = {
                 </div>
             </fieldset>
         </form>
-        <div class="d-flex" v-if="savedFiles.length > 0">
-            <div class="position-relative rounded shadow-sm align-self-center m-2 p-1" style="min-width:100px; max-width:200px;" v-for="(img, idx) in savedFiles" :key="idx">
+        <div class="d-flex flex-wrap mt-4" v-if="savedFiles.length > 0">
+            <div class="position-relative rounded shadow-sm align-self-center m-2 p-1" style="max-width:200px;" v-for="(img, idx) in savedFiles" :key="idx">
                 <img class="w-100" :src="'/mng/file/'+img.file_nm">
                 <button @click="deleteFile(img.file_nm)" type="button" class="btn-close position-absolute top-0 end-0 mt-2 me-2" aria-label="Close"></button>
             </div>
