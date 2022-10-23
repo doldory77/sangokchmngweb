@@ -12,7 +12,8 @@ const BoardRegView = {
             linkUrl:'',
             write_dt:'',
             writer:'',
-            use_yn:'',
+            use_yn:'Y',
+            tag_yn:'N',
             savedFiles: [],
         }
     },
@@ -32,6 +33,7 @@ const BoardRegView = {
                     if (result.data.result === 'success') {
                         that.subject = result.data.data[0].subject
                         that.content = result.data.data[0].content
+                        that.tag_yn = result.data.data[0].tag_yn
                         that.linkUrl = result.data.data[0].link_url
                         that.write_dt = result.data.data[0].write_dt
                         that.writer = result.data.data[0].writer
@@ -46,9 +48,7 @@ const BoardRegView = {
         }
     },
     computed: {
-        useYn() {
-            if (this.use_yn == 'Y') { return true } else { return false }
-        }
+        
     },
     methods: {
         setFile1(arr) {
@@ -85,6 +85,8 @@ const BoardRegView = {
                 form.append("fileNames", this.attchFile2Name)
             }
             form.append("attchFiles", [])
+            form.append("use_yn", this.use_yn)
+            form.append("tag_yn", this.tag_yn)
             try {
                 const result = await this.$http.post("/board/save", form, {
                     headers: {
@@ -151,6 +153,15 @@ const BoardRegView = {
                     </div>
                 </div>
                 <div class="row g-2 mb-3">
+                    <span class="col-sm-2 col-form-label"></span>
+                    <div class="col-sm-10">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" ref="tagyn" type="checkbox" role="switch" id="flexSwitchCheck1" :checked="tag_yn == 'Y' ? true : false" @change="tag_yn = ($refs.tagyn.checked == true ? 'Y' : 'N')">
+                            <label class="form-check-label" for="flexSwitchCheck1">{{ tag_yn == 'Y' ? '본문에 HTML 사용' : '본문에 TEXT 사용' }}</label>
+                        </div> 
+                    </div>
+                </div>
+                <div class="row g-2 mb-3">
                     <label for="inputLinkUrl" class="col-sm-2 col-form-label">Link</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" v-model="linkUrl" id="inputLinkUrl"> 
@@ -160,8 +171,8 @@ const BoardRegView = {
                     <span class="col-sm-2 col-form-label"></span>
                     <div class="col-sm-10">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" ref="sw" type="checkbox" role="switch" id="flexSwitchCheckDefault" :checked="use_yn == 'Y' ? true : false" @change="use_yn = ($refs.sw.checked == true ? 'Y' : 'N')">
-                            <label class="form-check-label" for="flexSwitchCheckDefault">{{ use_yn == 'Y' ? '개시판 노출' : '게시판 비노출' }}</label>
+                            <input class="form-check-input" ref="useyn" type="checkbox" role="switch" id="flexSwitchCheck2" :checked="use_yn == 'Y' ? true : false" @change="use_yn = ($refs.useyn.checked == true ? 'Y' : 'N')">
+                            <label class="form-check-label" for="flexSwitchCheck2">{{ use_yn == 'Y' ? '개시판 노출' : '게시판 비노출' }}</label>
                         </div> 
                     </div>
                 </div>
@@ -171,12 +182,12 @@ const BoardRegView = {
                 <md-file title="첨부파일2" @setFile="setFile2">
                     <div class="position-absolute top-0 start-50 translate-middle-x">{{ this.attchFile2Name }}</div>
                 </md-file>
-                <div class="d-grid col-6 mx-auto mt-5">
+                <div class="d-grid col-md-6 mx-auto mt-5">
                     <button type="submit" class="btn btn-primary px-3">저장</button>
                 </div>
             </fieldset>
         </form>
-        <div class="d-flex flex-wrap mt-4" v-if="savedFiles.length > 0">
+        <div class="d-flex justify-content-center flex-wrap mt-4" v-if="savedFiles.length > 0">
             <div class="position-relative rounded shadow-sm align-self-center m-2 p-1" style="max-width:200px;" v-for="(img, idx) in savedFiles" :key="idx">
                 <img class="w-100" :src="'/mng/file/'+img.file_nm">
                 <button @click="deleteFile(img.file_nm)" type="button" class="btn-close position-absolute top-0 end-0 mt-2 me-2" aria-label="Close"></button>

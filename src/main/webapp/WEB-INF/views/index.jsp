@@ -16,6 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/mng/js/util/Comm.js"></script>
     <script src="/mng/js/comp/FileX.js"></script>
+    <script src="/mng/js/comp/HeaderX.js"></script>
     <script src="/mng/js/board/BoardItemView.js"></script>
     <script src="/mng/js/board/BoardRegView.js"></script>
     <script src="/mng/js/home/Home.js"></script>
@@ -55,7 +56,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
                                 <li><router-link class="dropdown-item" to="/menu0201">예배안내</router-link></li>
-                                <li><router-link class="dropdown-item" to="/menu0202">교회주보</router-link></li>
+                                <li><router-link class="dropdown-item" :to="{name:'Menu0202',query: {pageno:'1'}}">교회주보</router-link></li>
                                 <li><router-link class="dropdown-item" to="/menu0202">주일설교</router-link></li>  
                             </ul>
                         </li>
@@ -145,6 +146,7 @@
     app.config.globalProperties.$http = http
     app.config.globalProperties.$comm = Comm
     app.component('md-file', FileX)
+    app.component('md-header', HeaderX)
     app.component('bd-item', BoardItemView)
     app.use(router)
     app.mount('#app')

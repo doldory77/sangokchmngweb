@@ -10,6 +10,7 @@
 			b.menu_nm,
 			a.subject,
 			a.content,
+			a.tag_yn,
 			a.link_url,
 			IFNULL(a.view_cnt, 0) AS view_cnt,
 			a.use_yn,
@@ -92,7 +93,10 @@
 		view_cnt = IFNULL(view_cnt, 0) + 1,
 		</if>
 		<if test='use_yn neq null and use_yn neq ""'>
-		use_yn = #{use_yn}
+		use_yn = #{use_yn},
+		</if>
+		<if test='tag_yn neq null and tag_yn neq ""'>
+		use_yn = #{tag_yn},
 		</if>
 		<if test='modifier neq null and modifier neq ""'>
 		modifier = #{modifier},
