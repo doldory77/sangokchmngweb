@@ -96,7 +96,7 @@
 		use_yn = #{use_yn},
 		</if>
 		<if test='tag_yn neq null and tag_yn neq ""'>
-		use_yn = #{tag_yn},
+		tag_yn = #{tag_yn},
 		</if>
 		<if test='modifier neq null and modifier neq ""'>
 		modifier = #{modifier},
