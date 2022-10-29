@@ -6,7 +6,8 @@ const BoardItemView = {
         "subject",
         "content",
         "writer",
-        "write_dt",
+        "writeDt",
+        "tagYn",
     ],
     data() {
         return {
@@ -24,9 +25,13 @@ const BoardItemView = {
             <div class="flex-fill">
                 <div class="d-flex justify-content-between">
                     <strong class="text-gray-dark">{{ subject }}</strong>
-                    <!--<router-link :to="{name: 'Board', query: {kind:this.kind, bno:this.bno}}">{{bno}}</router-link>-->
                 </div>
-                <span class="d-block">{{ content }}</span>
+                <template v-if="tagYn == 'Y'">
+                    <span class="d-block" v-html="content"></span>
+                </template>
+                <template v-else>
+                    <span class="d-block">{{ content }}</span>
+                </template>
             </div>
             <div class="ms-3">
                 <router-link :to="{name: 'Board', query: {kind:this.kind, bno:this.bno, title:this.title}}">
