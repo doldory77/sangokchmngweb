@@ -1,6 +1,7 @@
 const BoardRegView = {
     data() {
         return {
+            title:'',
             boardKind: '',
             bno:0,
             subject: '',
@@ -19,7 +20,8 @@ const BoardRegView = {
     },
     created() {
         this.boardKind = this.$route.query.kind
-        this.bno = this.$route.query.bno;
+        this.bno = this.$route.query.bno
+        this.title = this.$route.query.title
         console.log('this.boardKind: ', this.boardKind, 'this.bno: ', this.bno)
         if (this.bno) {
             (async function(that){
@@ -96,7 +98,7 @@ const BoardRegView = {
                 console.log(result)
                 if (result.data && result.data.result == 'success') {
                     if (confirm('정상 완료 되었습니다.')) {
-                        this.$router.replace('Menu0202')
+                        this.$router.replace({name:this.boardKind, query: {pageno:'1'}})
                     }
                 }
             } catch (err) {
@@ -132,13 +134,8 @@ const BoardRegView = {
     },
     template: `
     <div class="container">
-        <div class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm" style="background-color: rgb(111, 66, 193);">
-            <img class="me-3" src="https://getbootstrap.kr/docs/5.2/assets/brand/bootstrap-logo-white.svg" alt="" width="48" height="38">
-            <div class="lh-1">
-                <h1 class="h6 mb-0 text-white lh-1">Bootstrap</h1>
-                <small>Since 2011</small>
-            </div>
-        </div>
+
+        <md-header :title="title"></md-header>
 
         <form class="p-2" @submit.prevent="formSubmit">
             <fieldset>

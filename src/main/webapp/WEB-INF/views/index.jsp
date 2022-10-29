@@ -20,13 +20,13 @@
     <script src="/mng/js/board/BoardItemView.js"></script>
     <script src="/mng/js/board/BoardRegView.js"></script>
     <script src="/mng/js/home/Home.js"></script>
+    <script src="/mng/js/menu02/Menu0201.js"></script>
     <script src="/mng/js/menu02/Menu0202.js"></script>
+    <script src="/mng/js/menu02/Menu0203.js"></script>
     <!--<script src="/js/etc/Temp.js"></script>
     <script src="/js/menu01/Menu0101.js"></script>
     <script src="/js/menu01/Menu0102.js"></script>
     <script src="/js/menu01/Menu0103.js"></script>
-    <script src="/js/menu02/Menu0201.js"></script>
-    <script src="/js/menu02/Menu0203.js"></script>
     <script src="/js/menu04/Menu0401.js"></script>-->
 </head>
 <body>
@@ -55,9 +55,9 @@
                               예배
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-                                <li><router-link class="dropdown-item" to="/menu0201">예배안내</router-link></li>
-                                <li><router-link class="dropdown-item" :to="{name:'Menu0202',query: {pageno:'1'}}">교회주보</router-link></li>
-                                <li><router-link class="dropdown-item" to="/menu0202">주일설교</router-link></li>  
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0201',query: {pageno:'1'}}">예배안내</router-link></li>
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0202',query: {pageno:'1'}}">교회주보</router-link></li>
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0203',query: {pageno:'1'}}">주일설교</router-link></li>  
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -107,9 +107,9 @@
             // {name:'Menu0101', path:'/menu0101', component:Menu0101},
             // {name:'Menu0102', path:'/menu0102', component:Menu0102},
             // {name:'Menu0103', path:'/menu0103', component:Menu0103},
-            // {name:'Menu0201', path:'/menu0201', component:Menu0201},
-            {name:'Menu0202', path:'/menu0202', component:Menu0202},
-            // {name:'Menu0203', path:'/menu0203', component:Menu0203},
+            {name:'MENU0201', path:'/menu0201', component:Menu0201},
+            {name:'MENU0202', path:'/menu0202', component:Menu0202},
+            {name:'MENU0203', path:'/menu0203', component:Menu0203},
             // {name:'Menu03', path:'/menu03', component:Temp},
             // {name:'Menu0401', path:'/menu0401', component:Menu0401},
             
