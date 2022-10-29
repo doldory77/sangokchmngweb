@@ -116,7 +116,8 @@
         ]
     })
     const http = axios.create({
-        baseURL: "http://localhost:8081/mng",
+        // baseURL: "http://localhost:8081/mng",
+        baseURL: Comm.baseURL,
     })
 
     const app = createApp({

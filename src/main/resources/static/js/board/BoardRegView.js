@@ -125,7 +125,10 @@ const BoardRegView = {
                     }
                 })(this, fileName)
             }
-        } 
+        },
+        errorImg(e) {
+            e.target.src = this.$comm.noImgURL
+        }, 
     },
     template: `
     <div class="container">
@@ -189,7 +192,7 @@ const BoardRegView = {
         </form>
         <div class="d-flex justify-content-center flex-wrap mt-4" v-if="savedFiles.length > 0">
             <div class="position-relative rounded shadow-sm align-self-center m-2 p-1" style="max-width:200px;" v-for="(img, idx) in savedFiles" :key="idx">
-                <img class="w-100" :src="'/mng/file/'+img.file_nm">
+                <img @error="errorImg" class="w-100" :src="'/mng/file/'+img.file_nm">
                 <button @click="deleteFile(img.file_nm)" type="button" class="btn-close position-absolute top-0 end-0 mt-2 me-2" aria-label="Close"></button>
             </div>
         </div>
