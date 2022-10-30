@@ -26,14 +26,10 @@ const BoardItemView = {
                 <div class="d-flex justify-content-between">
                     <strong class="text-gray-dark">{{ subject }}</strong>
                 </div>
-                <template v-if="tagYn == 'Y'">
-                    <span class="d-block" v-html="content"></span>
-                </template>
-                <template v-else>
-                    <span class="d-block">{{ content }}</span>
-                </template>
+                <span v-if="tagYn == 'Y'" class="d-block pt-1" v-html="content"></span>
+                <span v-else class="d-block pt-1">{{ content }}</span>
             </div>
-            <div class="ms-3">
+            <div class="ms-3 d-flex align-items-center">
                 <router-link :to="{name: 'Board', query: {kind:this.kind, bno:this.bno, title:this.title}}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-right-square" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
