@@ -20,14 +20,14 @@
     <script src="/mng/js/board/BoardItemView.js"></script>
     <script src="/mng/js/board/BoardRegView.js"></script>
     <script src="/mng/js/home/Home.js"></script>
+    <script src="/mng/js/menu01/Menu0103.js"></script>
     <script src="/mng/js/menu02/Menu0201.js"></script>
     <script src="/mng/js/menu02/Menu0202.js"></script>
     <script src="/mng/js/menu02/Menu0203.js"></script>
     <script src="/mng/js/menu04/Menu0401.js"></script>
     <!--<script src="/js/etc/Temp.js"></script>
-    <script src="/js/menu01/Menu0101.js"></script>
-    <script src="/js/menu01/Menu0102.js"></script>
-    <script src="/js/menu01/Menu0103.js"></script>
+        <script src="/js/menu01/Menu0101.js"></script>
+        <script src="/mng/js/menu01/Menu0102.js"></script>
     -->
 </head>
 <body>
@@ -48,7 +48,7 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
                                 <li><router-link class="dropdown-item" to="/menu0101">우리교회는?</router-link></li>
                                 <li><router-link class="dropdown-item" to="/menu0102">교회섬김이</router-link></li>
-                                <li><router-link class="dropdown-item" to="/menu0102">오시는 길</router-link></li>
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0103',query: {pageno:'1'}}">오시는 길</router-link></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -107,7 +107,7 @@
             // {name:'Temp', path:'/temp', component:Temp},
             // {name:'Menu0101', path:'/menu0101', component:Menu0101},
             // {name:'Menu0102', path:'/menu0102', component:Menu0102},
-            // {name:'Menu0103', path:'/menu0103', component:Menu0103},
+            {name:'MENU0103', path:'/menu0103', component:Menu0103},
             {name:'MENU0201', path:'/menu0201', component:Menu0201},
             {name:'MENU0202', path:'/menu0202', component:Menu0202},
             {name:'MENU0203', path:'/menu0203', component:Menu0203},
