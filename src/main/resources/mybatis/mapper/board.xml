@@ -17,7 +17,8 @@
 			a.writer,
 			date_format(STR_TO_DATE(a.write_dt, '%Y%m%d%H%i%s'), '%Y-%m-%d %H:%i:%s') AS write_dt,
 			a.modifier, 
-			IF(a.modified_dt = null, null, date_format(STR_TO_DATE(a.modified_dt, '%Y%m%d%H%i%s'), '%Y-%m-%d %H:%i:%s')) AS modified_dt 
+			IF(a.modified_dt = null, null, date_format(STR_TO_DATE(a.modified_dt, '%Y%m%d%H%i%s'), '%Y-%m-%d %H:%i:%s')) AS modified_dt,
+			a.ord 
 		FROM board a
 			, menu b
 		WHERE a.kind_cd = b.menu_cd
@@ -30,7 +31,7 @@
 		<if test='kind_cd neq null and kind_cd neq ""'>
 			AND kind_cd = #{kind_cd}
 		</if>
-		ORDER BY bno desc
+		ORDER BY ord asc, bno desc
 		<if test='pageno neq null and pageno neq ""'>
 		LIMIT #{limit} OFFSET #{offset}
 		</if>				
@@ -62,6 +63,7 @@
 			,writer
 			</if>
 			,write_dt
+			,ord
 		) VALUES (
 			#{kind_cd}
 			,#{subject}
@@ -73,6 +75,9 @@
 			,#{writer}
 			</if>
 			,DATE_FORMAT(SYSDATE(), '%Y%m%d%H%i%s')
+			<if test='ord != null'>
+			,#{ord}
+			</if>
 		)
 	</insert>
 	<update id="updateBoard" parameterType="Board">

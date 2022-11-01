@@ -16,6 +16,7 @@ const BoardRegView = {
             use_yn:'Y',
             tag_yn:'N',
             savedFiles: [],
+            ord:1
         }
     },
     created() {
@@ -41,6 +42,7 @@ const BoardRegView = {
                         that.writer = result.data.data[0].writer
                         that.use_yn = result.data.data[0].use_yn
                         that.savedFiles = result.data.data[0].attchFiles
+                        that.ord = result.data.data[0].ord
                     }
                 } catch (err) {
                     console.error(err)
@@ -78,6 +80,7 @@ const BoardRegView = {
             }
             form.append("content", this.content)
             if (this.linkUrl) form.append("link_url", this.linkUrl)
+            if (this.ord) form.append("ord", this.ord)
             if (this.attchFile1) {
                 form.append("files", this.attchFile1)
                 form.append("fileNames", this.attchFile1Name)
@@ -165,6 +168,12 @@ const BoardRegView = {
                     <label for="inputLinkUrl" class="col-sm-2 col-form-label">Link</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" v-model="linkUrl" id="inputLinkUrl"> 
+                    </div>
+                </div>
+                <div class="row g-2 mb-3">
+                    <label for="inputOrd" class="col-sm-2 col-form-label">노출순번</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" v-model="ord" id="inputOrd"> 
                     </div>
                 </div>
                 <div class="row g-2 mb-3">

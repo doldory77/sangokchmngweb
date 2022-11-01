@@ -4,19 +4,20 @@ import java.util.List;
 
 public class Board {
 
-	public int bno;
-	public String kind_cd;
-	public String subject;
-	public String content;
-	public String tag_yn;
-	public String link_url;
-	public int view_cnt;
-	public String use_yn;
-	public String writer;
-	public String write_dt;
-	public String modifier;
-	public String modified_dt;
-	public List<AttchFile> attchFiles;
+	private int bno;
+	private String kind_cd;
+	private String subject;
+	private String content;
+	private String tag_yn;
+	private String link_url;
+	private int view_cnt;
+	private String use_yn;
+	private String writer;
+	private String write_dt;
+	private String modifier;
+	private String modified_dt;
+	private List<AttchFile> attchFiles;
+	private int ord;
 	
 	public int getBno() {
 		return bno;
@@ -95,6 +96,12 @@ public class Board {
 	}
 	public void setAttchFiles(List<AttchFile> attchFiles) {
 		this.attchFiles = attchFiles;
+	}
+	public int getOrd() {
+		return ord;
+	}
+	public void setOrd(int ord) {
+		this.ord = ord;
 	}
 	
 	
