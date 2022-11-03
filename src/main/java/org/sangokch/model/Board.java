@@ -18,6 +18,7 @@ public class Board {
 	private String modified_dt;
 	private List<AttchFile> attchFiles;
 	private int ord;
+	private String attr1;
 	
 	public int getBno() {
 		return bno;
@@ -102,6 +103,12 @@ public class Board {
 	}
 	public void setOrd(int ord) {
 		this.ord = ord;
+	}
+	public String getAttr1() {
+		return attr1;
+	}
+	public void setAttr1(String attr1) {
+		this.attr1 = attr1;
 	}
 	
 	

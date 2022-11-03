@@ -16,7 +16,8 @@ const BoardRegView = {
             use_yn:'Y',
             tag_yn:'N',
             savedFiles: [],
-            ord:1
+            ord:1,
+            attr1:''
         }
     },
     created() {
@@ -43,6 +44,7 @@ const BoardRegView = {
                         that.use_yn = result.data.data[0].use_yn
                         that.savedFiles = result.data.data[0].attchFiles
                         that.ord = result.data.data[0].ord
+                        that.attr1 = result.data.data[0].attr1
                     }
                 } catch (err) {
                     console.error(err)
@@ -81,6 +83,7 @@ const BoardRegView = {
             form.append("content", this.content)
             if (this.linkUrl) form.append("link_url", this.linkUrl)
             if (this.ord) form.append("ord", this.ord)
+            if (this.attr1) form.append("attr1", this.attr1)
             if (this.attchFile1) {
                 form.append("files", this.attchFile1)
                 form.append("fileNames", this.attchFile1Name)
@@ -152,7 +155,7 @@ const BoardRegView = {
                 <div class="row g-2 mb-3">
                     <label for="inputContent" class="col-sm-2 col-form-label">내용</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" v-model="content" id="inputContent" rows="3"></textarea>
+                        <textarea class="form-control" v-model="content" id="inputContent" rows="8"></textarea>
                     </div>
                 </div>
                 <div class="row g-2 mb-3">
@@ -172,8 +175,14 @@ const BoardRegView = {
                 </div>
                 <div class="row g-2 mb-3">
                     <label for="inputOrd" class="col-sm-2 col-form-label">노출순번</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-2">
                         <input type="text" class="form-control" v-model="ord" id="inputOrd"> 
+                    </div>
+                </div>
+                <div class="row g-2 mb-3">
+                    <label for="inputAttr1" class="col-sm-2 col-form-label">기타속성</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" v-model="attr1" id="inputAttr1"> 
                     </div>
                 </div>
                 <div class="row g-2 mb-3">

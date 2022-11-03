@@ -18,7 +18,8 @@
 			date_format(STR_TO_DATE(a.write_dt, '%Y%m%d%H%i%s'), '%Y-%m-%d %H:%i:%s') AS write_dt,
 			a.modifier, 
 			IF(a.modified_dt = null, null, date_format(STR_TO_DATE(a.modified_dt, '%Y%m%d%H%i%s'), '%Y-%m-%d %H:%i:%s')) AS modified_dt,
-			a.ord 
+			a.ord,
+			a.attr1 
 		FROM board a
 			, menu b
 		WHERE a.kind_cd = b.menu_cd
@@ -63,7 +64,15 @@
 			,writer
 			</if>
 			,write_dt
+			<if test='ord != null'>
 			,ord
+			</if>
+			<if test='attr1 neq null and attr1 neq ""'>
+			,attr1
+			</if>
+			<if test='tag_yn neq null and tag_yn neq ""'>
+			,tag_yn
+			</if>
 		) VALUES (
 			#{kind_cd}
 			,#{subject}
@@ -77,6 +86,12 @@
 			,DATE_FORMAT(SYSDATE(), '%Y%m%d%H%i%s')
 			<if test='ord != null'>
 			,#{ord}
+			</if>
+			<if test='attr1 neq null and attr1 neq ""'>
+			,#{attr1}
+			</if>
+			<if test='tag_yn neq null and tag_yn neq ""'>
+			,#{tag_yn}
 			</if>
 		)
 	</insert>
@@ -105,6 +120,12 @@
 		</if>
 		<if test='modifier neq null and modifier neq ""'>
 		modifier = #{modifier},
+		</if>
+		<if test='ord != null'>
+		ord = #{ord},
+		</if>
+		<if test='attr1 neq null and attr1 neq ""'>
+		attr1 = #{attr1},
 		</if>
 		modified_dt = DATE_FORMAT(SYSDATE(), '%Y%m%d%H%i%s')
 		WHERE bno = #{bno}	
