@@ -17,7 +17,8 @@ const BoardRegView = {
             tag_yn:'N',
             savedFiles: [],
             ord:1,
-            attr1:''
+            attr1:'',
+            external_yn:'N',
         }
     },
     created() {
@@ -45,6 +46,7 @@ const BoardRegView = {
                         that.savedFiles = result.data.data[0].attchFiles
                         that.ord = result.data.data[0].ord
                         that.attr1 = result.data.data[0].attr1
+                        that.external_yn = result.data.data[0].external_yn
                     }
                 } catch (err) {
                     console.error(err)
@@ -95,6 +97,7 @@ const BoardRegView = {
             form.append("attchFiles", [])
             form.append("use_yn", this.use_yn)
             form.append("tag_yn", this.tag_yn)
+            form.append("external_yn", this.external_yn)
             try {
                 const result = await this.$http.post("/board/save", form, {
                     headers: {
@@ -171,6 +174,15 @@ const BoardRegView = {
                     <label for="inputLinkUrl" class="col-sm-2 col-form-label">Link</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" v-model="linkUrl" id="inputLinkUrl"> 
+                    </div>
+                </div>
+                <div class="row g-2 mb-3">
+                    <span class="col-sm-2 col-form-label"></span>
+                    <div class="col-sm-10">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" ref="externalyn" type="checkbox" role="switch" id="flexSwitchCheck3" :checked="external_yn == 'Y' ? true : false" @change="external_yn = ($refs.externalyn.checked == true ? 'Y' : 'N')">
+                            <label class="form-check-label" for="flexSwitchCheck3">{{ external_yn == 'Y' ? '외부링크' : '내부링크' }}</label>
+                        </div> 
                     </div>
                 </div>
                 <div class="row g-2 mb-3">

@@ -19,6 +19,7 @@ public class Board {
 	private List<AttchFile> attchFiles;
 	private int ord;
 	private String attr1;
+	private String external_yn;
 	
 	public int getBno() {
 		return bno;
@@ -109,6 +110,12 @@ public class Board {
 	}
 	public void setAttr1(String attr1) {
 		this.attr1 = attr1;
+	}
+	public String getExternal_yn() {
+		return external_yn;
+	}
+	public void setExternal_yn(String external_yn) {
+		this.external_yn = external_yn;
 	}
 	
 	

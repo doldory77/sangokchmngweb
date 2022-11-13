@@ -19,7 +19,8 @@
 			a.modifier, 
 			IF(a.modified_dt = null, null, date_format(STR_TO_DATE(a.modified_dt, '%Y%m%d%H%i%s'), '%Y-%m-%d %H:%i:%s')) AS modified_dt,
 			a.ord,
-			a.attr1 
+			a.attr1,
+			a.external_yn 
 		FROM board a
 			, menu b
 		WHERE a.kind_cd = b.menu_cd
@@ -73,6 +74,9 @@
 			<if test='tag_yn neq null and tag_yn neq ""'>
 			,tag_yn
 			</if>
+			<if test='external_yn neq null and external_yn neq ""'>
+			,external_yn
+			</if>
 		) VALUES (
 			#{kind_cd}
 			,#{subject}
@@ -92,6 +96,9 @@
 			</if>
 			<if test='tag_yn neq null and tag_yn neq ""'>
 			,#{tag_yn}
+			</if>
+			<if test='external_yn neq null and external_yn neq ""'>
+			,#{external_yn}
 			</if>
 		)
 	</insert>
@@ -126,6 +133,9 @@
 		</if>
 		<if test='attr1 neq null and attr1 neq ""'>
 		attr1 = #{attr1},
+		</if>
+		<if test='external_yn neq null and external_yn neq ""'>
+		external_yn = #{external_yn},
 		</if>
 		modified_dt = DATE_FORMAT(SYSDATE(), '%Y%m%d%H%i%s')
 		WHERE bno = #{bno}	

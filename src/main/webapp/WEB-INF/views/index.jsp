@@ -20,6 +20,7 @@
     <script src="/mng/js/board/BoardItemView.js"></script>
     <script src="/mng/js/board/BoardRegView.js"></script>
     <script src="/mng/js/home/Home.js"></script>
+    <script src="/mng/js/menu00/Menu0001.js"></script>
     <script src="/mng/js/menu01/Menu0101.js"></script>
     <script src="/mng/js/menu01/Menu0102.js"></script>
     <script src="/mng/js/menu01/Menu0103.js"></script>
@@ -41,6 +42,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{name:'MENU0001',query: {pageno:'1'}}" disabled>홈</router-link>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                               교회소개
@@ -105,6 +109,7 @@
             {name:'Home', path:'/', component:Home},
             {name:'Board', path:'/board', component:BoardRegView},
             // {name:'Temp', path:'/temp', component:Temp},
+            {name:'MENU0001', path:'/menu0001', component:Menu0001},
             {name:'MENU0101', path:'/menu0101', component:Menu0101},
             {name:'MENU0102', path:'/menu0102', component:Menu0102},
             {name:'MENU0103', path:'/menu0103', component:Menu0103},

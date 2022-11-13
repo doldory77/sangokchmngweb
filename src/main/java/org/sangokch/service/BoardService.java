@@ -2,6 +2,7 @@ package org.sangokch.service;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,6 +77,27 @@ public class BoardService {
 			boards = new ArrayList<Board>();
 		}
 		return boards;
+	}
+	
+	public Map<String, Object> selectBoardToMap(Map<String, Object> params) {
+		Map<String, Object> returnMap = new HashMap<>();
+		List<Board> boards = null;
+		Integer cnt = 0;
+		
+		if (params.containsKey("bno") || params.containsKey("kind_cd")) {
+			boards = boardMapper.selectBoard(params);
+			cnt = boardMapper.selectBoardTotalCnt();
+			for (int i=0; i<boards.size(); i++) {
+				Board board = boards.get(i);
+				List<AttchFile> files = boardMapper.selectAttchFile(new MapX("bno", board.getBno()).getMap());
+				boards.get(i).setAttchFiles(files);
+			}
+		} else {
+			boards = new ArrayList<Board>();
+		}
+		returnMap.put("list", boards);
+		returnMap.put("totalCnt", cnt);
+		return returnMap;
 	}
 	
 	public int selectBoardTotalCnt() {

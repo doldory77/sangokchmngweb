@@ -8,6 +8,7 @@ const BoardItemView = {
         "writer",
         "writeDt",
         "tagYn",
+        "attr1",
     ],
     data() {
         return {
@@ -25,6 +26,7 @@ const BoardItemView = {
             <div class="flex-fill">
                 <div class="d-flex justify-content-between">
                     <strong class="text-gray-dark">{{ subject }}</strong>
+                    <strong v-if="attr1" class="text-gray-dark">[{{ attr1 }}]</strong>
                 </div>
                 <span v-if="tagYn == 'Y'" class="d-block pt-1" v-html="content"></span>
                 <span v-else class="d-block pt-1">{{ content }}</span>
