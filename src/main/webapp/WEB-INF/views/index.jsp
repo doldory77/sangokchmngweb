@@ -37,17 +37,21 @@
             <div class="modal-dialog modal-dialog-scrollable">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalScrollableTitle">Modal title</h1>
+                  <h1 class="modal-title fs-5" id="exampleModalScrollableTitle">{{ searchText }}</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <p>This is some placeholder content to show the scrolling behavior for modals. We use repeated line breaks to demonstrate how content can exceed minimum inner height, thereby showing inner scrolling. When content becomes longer than the predefined max-height of modal, content will be cropped and scrollable within the modal.</p>
-                  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-                  <p>This content should appear at the bottom after you scroll.</p>
+                  <p v-for="(item, idx) in searchItems" :key="idx">
+                    <template v-if="item.title">{{ item.verse + ' ' + item.content }}</template>
+                    <template v-else>
+                        <p v-if="idx === 0">{{ item.subject }}</p>
+                        <pre>{{ item.lyrics }}</pre>
+                    </template> 
+                  </p>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
+                  <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                 </div>
               </div>
             </div>
@@ -152,25 +156,33 @@
         data() {
             return {
                 searchText: '',
+                searchItems: [],
             }
         },
         methods: {
             parseBibleHymn() {
                 // console.log(this.searchText)
                 if (this.searchText) {
-                    console.log(this.$comm.parseBibleHymn(this.searchText))
+                    let params = this.$comm.parseBibleHymn(this.searchText)
+                    if (params.kind) {
+                        this.search(params)
+                    }
                 }
             },   
-            async search() {
+            async search(params) {
                 try {
-                    const result = await this.$http.post("/board/select", {}, {
+                    const result = await this.$http.post("/search/bibleHymn", params, {
                         headers: {
                             "Content-Type": "application/json",
                         }
                     })
-                    console.log(result)
+                    // console.log(result)
                     if (result.data && result.data.result == 'success') {
-                        console.log(result.data.data)
+                        // console.log(result.data.data)
+                        this.searchItems = result.data.data
+                        this.showModal()
+                    } else {
+                        this.searchItems = []
                     }
                 } catch (err) {
                     console.error(err)
@@ -178,8 +190,10 @@
                 }
             },
             showModal() {
-                let myModal = new bootstrap.Modal(document.getElementById('exampleModalScrollable'))
-                myModal.show()
+                if (this.searchItems && this.searchItems.length > 0) {
+                    let myModal = new bootstrap.Modal(document.getElementById('exampleModalScrollable'))
+                    myModal.show()
+                }
             }
         },
         mounted() {
