@@ -33,7 +33,25 @@
 </head>
 <body>
     <div id="app" style="padding-top: 56px;">
-
+        <div class="modal fade" id="exampleModalScrollable" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalScrollableTitle">Modal title</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>This is some placeholder content to show the scrolling behavior for modals. We use repeated line breaks to demonstrate how content can exceed minimum inner height, thereby showing inner scrolling. When content becomes longer than the predefined max-height of modal, content will be cropped and scrollable within the modal.</p>
+                  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                  <p>This content should appear at the bottom after you scroll.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+        </div>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top sg-navbar">
             <div class="container-lg">
                 <a class="navbar-brand" href="#">산곡성결교회</a>
@@ -77,6 +95,10 @@
                             </ul>
                         </li>
                     </ul>
+                    <form class="d-flex ms-auto" role="search" v-on:submit.prevent="parseBibleHymn">
+                        <input v-model="searchText" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
                 </div>
             </div>
         </nav>
@@ -129,21 +151,32 @@
     const app = createApp({
         data() {
             return {
-                message: 'Hello Vue!',
+                searchText: '',
             }
         },
         methods: {
-            change() {
-                this.message = 'Hello Vue Method!'
+            parseBibleHymn() {
+                console.log(this.searchText)
+            },   
+            async search() {
+                try {
+                    const result = await this.$http.post("/board/select", {}, {
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
+                    })
+                    console.log(result)
+                    if (result.data && result.data.result == 'success') {
+                        console.log(result.data.data)
+                    }
+                } catch (err) {
+                    console.error(err)
+                    alert(err.response.data.msg)
+                }
             },
-            getMenu() {
-                axios.get('http://localhost:8080/index/menu')
-                .then(res => {
-                    console.log(res)
-                })
-                .catch(err => {
-                    console.log(err)
-                }) 
+            showModal() {
+                let myModal = new bootstrap.Modal(document.getElementById('exampleModalScrollable'))
+                myModal.show()
             }
         },
         mounted() {

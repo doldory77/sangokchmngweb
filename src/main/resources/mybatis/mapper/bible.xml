@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+                        
+<mapper namespace="org.sangokch.mapper.BibleMapper">
+	<select id="selectBibleList" parameterType="hashmap" resultType="hashmap">
+		SELECT
+			b.title,
+			a.chapter,
+			a.verse,
+			a.content
+		FROM bible_korHRV a,
+			bible_bookLST b
+		WHERE a.book = b.book
+			AND b.title = #{title}
+			AND a.chapter = #{chapter}
+			AND a.verse <![CDATA[>=]]> #{s_verse}
+			AND a.verse <![CDATA[<=]]> #{e_verse}
+		ORDER BY chapter, verse
+	</select>
+	<select id="selectHymnList" parameterType="hashmap" resultType="hashmap">
+		SELECT
+			page_no,
+			subject,
+			lyrics
+		FROM hymn
+		WHERE 1=1
+			<if test='title neq null and title neq ""'>
+			AND subject LIKE CONCAT('%',#{title},'%')
+			</if>
+			<if test='chapter neq null and chapter gt 0'>
+			AND page_no = #{chapter}	
+			</if>
+	</select>
+</mapper>

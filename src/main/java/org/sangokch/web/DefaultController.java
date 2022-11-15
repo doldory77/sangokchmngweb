@@ -1,5 +1,6 @@
 package org.sangokch.web;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.sangokch.model.Board;
 import org.sangokch.model.Menu;
 import org.sangokch.model.ResponseData;
 import org.sangokch.service.AdmstService;
+import org.sangokch.service.BibleService;
 import org.sangokch.service.BoardService;
 import org.sangokch.service.MenuService;
 import org.sangokch.util.Const;
@@ -36,6 +38,9 @@ public class DefaultController {
 	
 	@Autowired
 	BoardService boardService;
+	
+	@Autowired
+	BibleService bibleService;
 	
 	@Autowired
 	MenuService menuService;
@@ -120,6 +125,21 @@ public class DefaultController {
 			return getRes("success");
 		}
 		throw new RuntimeException("삭제된 파일이 없습니다.");
+	}
+	
+	@RequestMapping("/search/bibleHymn")
+	public @ResponseBody ResponseData bibleHymn(@RequestBody Map<String, Object> params) {
+		ResponseData res = getRes("success");
+		List<Map<String, Object>> list = null;
+		if (params.containsKey("kind") && params.get("kind").toString().equals("B")) {
+			list = bibleService.selectBibleList(params);
+		} else if (params.containsKey("kind") && params.get("kind").toString().equals("H")) {
+			list = bibleService.selectHymnList(params);
+		} else {
+			list = new ArrayList<>();
+		}
+		res.setData(list);
+		return res;
 	}
 	
 	@RequestMapping("/test")
