@@ -24,13 +24,13 @@ const Comm = {
         if (arrTitle && arrTitle[1]) {
             result.kind = 'B'
             result.title = arrTitle[1]
-            let arrShot = text.match(bibleRegShot)
+            let arrShot = text.match(this.bibleRegShot)
             if (arrShot && arrShot[1] && arrShot[2]) {
                 result.chapter = arrShot[1]
                 result.s_verse = arrShot[2]
                 result.e_verse = arrShot[2]
             } else {
-                let arrLong = text.match(bibleRegLong)
+                let arrLong = text.match(this.bibleRegLong)
                 if (arrLong && arrLong[1] && arrLong[2] && arrLong[3]) {
                     result.chapter = arrLong[1]
                     result.s_verse = arrLong[2]
@@ -41,7 +41,7 @@ const Comm = {
                 }
             }
         } else {
-            let arrHymn = text.match(hymnReg)
+            let arrHymn = text.match(this.hymnReg)
             if (arrHymn && arrHymn[1]) {
                 result.kind = 'H'
                 result.chapter = arrHymn[1]

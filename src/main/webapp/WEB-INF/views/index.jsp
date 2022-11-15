@@ -156,7 +156,10 @@
         },
         methods: {
             parseBibleHymn() {
-                console.log(this.searchText)
+                // console.log(this.searchText)
+                if (this.searchText) {
+                    console.log(this.$comm.parseBibleHymn(this.searchText))
+                }
             },   
             async search() {
                 try {
