@@ -10,6 +10,7 @@
 			menu_nm,
 			url,
 			use_yn,
+			require_auth_yn,
 			ord_no,
 			attr1
 		FROM menu
@@ -39,43 +40,47 @@
 	</select>
 	<insert id="insertMenu" parameterType="Menu">
 		INSERT INTO menu (
-			menu_cd,
-			parent_menu_cd,
-			menu_nm,
+			menu_cd
+			, parent_menu_cd
+			, menu_nm
 		<if test='attr1 neq null and attr1 neq ""'>
-			attr1
+			, attr1
+		</if>
+		<if test='require_auth_yn neq null and require_auth_yn neq ""'>
+			, require_auth_yn
 		</if>
 		) VALUES (
-			#{menu_cd},
-			IFNULL(#{parent_menu_cd}, LPAD('0', 8, '0')),
-			#{menu_nm},
+			#{menu_cd}
+			, IFNULL(#{parent_menu_cd}, LPAD('0', 8, '0'))
+			, #{menu_nm}
 		<if test='attr1 neq null and attr1 neq ""'>
-			#{attr1}
+			, #{attr1}
+		</if>
+		<if test='require_auth_yn neq null and require_auth_yn neq ""'>
+			, #{require_auth_yn}
 		</if>
 		)	
 	</insert>
 	<update id="updateMenu" parameterType="Menu">
 		UPDATE menu SET
+			menu_nm = #{menu_nm}
 		<if test='parent_menu_cd neq null and parent_menu_cd neq ""'>
-			parent_menu_cd = #{parent_menu_cd},
-		</if>
-		<if test='menu_nm neq null and menu_nm neq ""'>
-			menu_nm = #{menu_nm},
+			, parent_menu_cd = #{parent_menu_cd}
 		</if>
 		<if test='url neq null and url neq ""'>
-			url = #{url},
+			, url = #{url}
 		</if>
 		<if test='use_yn neq null and use_yn neq ""'>
-			use_yn = #{use_yn},
+			, use_yn = #{use_yn}
 		</if>
 		<if test='ord_no neq null and ord_no neq ""'>
-			ord_no = #{ord_no},
+			, ord_no = #{ord_no}
 		</if>
 		<if test='require_auth_yn neq null and require_auth_yn neq ""'>
-			require_auth_yn = #{require_auth_yn},
+			, require_auth_yn = #{require_auth_yn}
 		</if>
 		<if test='attr1 neq null and attr1 neq ""'>
-			attr1 = #{attr1}
+			, attr1 = #{attr1}
 		</if>
 		WHERE menu_cd =	#{menu_cd}
 	</update>

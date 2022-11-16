@@ -2,6 +2,7 @@ package org.sangokch.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.sangokch.mapper.MenuMapper;
 import org.sangokch.model.Menu;
@@ -29,5 +30,20 @@ public class MenuService {
 			}
 		}
 		return mainMenus;
+	}
+	
+	public List<Menu> selectMenu(Map<String, Object> params) {
+		return menuMapper.selectMenu(params);
+	}
+	
+	public void saveMenu(List<Menu> menus) {
+		for (int i=0; i<menus.size(); i++) {
+			if ("I".equals(menus.get(i).getStt())) {
+				menuMapper.insertMenu(menus.get(i));
+			}
+			if ("U".equals(menus.get(i).getStt())) {
+				menuMapper.updateMenu(menus.get(i));
+			}
+		}
 	}
 }

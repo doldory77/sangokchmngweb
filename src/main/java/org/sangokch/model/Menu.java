@@ -4,15 +4,23 @@ import java.util.List;
 
 public class Menu {
 
+	private String stt;
 	private String menu_cd;
 	private String parent_menu_cd;
 	private String menu_nm;
 	private String url;
 	private String use_yn;
+	private String require_auth_yn;
 	private int ord_no;
 	private String attr1;
 	private List<Menu> subMenu;
 	
+	public String getStt() {
+		return stt;
+	}
+	public void setStt(String stt) {
+		this.stt = stt;
+	}
 	public String getMenu_cd() {
 		return menu_cd;
 	}
@@ -42,6 +50,12 @@ public class Menu {
 	}
 	public void setUse_yn(String use_yn) {
 		this.use_yn = use_yn;
+	}
+	public String getRequire_auth_yn() {
+		return require_auth_yn;
+	}
+	public void setRequire_auth_yn(String require_auth_yn) {
+		this.require_auth_yn = require_auth_yn;
 	}
 	public int getOrd_no() {
 		return ord_no;

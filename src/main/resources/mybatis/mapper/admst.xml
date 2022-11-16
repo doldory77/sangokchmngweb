@@ -22,12 +22,6 @@
 			and use_yn = 'Y'		
 		</if>
 	</select>
-	<select id="selectAuthority" parameterType="Admst" resultType="string">
-		SELECT
-			authority_cd
-		FROM authority
-		WHERE id = #{id}	
-	</select>
 	<insert id="insertAdmst" parameterType="Admst">
 		INSERT INTO admst (
 			id,
@@ -49,5 +43,36 @@
 			attr = #{attr}
 		WHERE id = #{id}
 	</update>
+	<delete id="deleteAdmst" parameterType="Admst">
+		UPDATE admst SET
+			use_yn = 'N'
+		WHERE id = #{id}
+	</delete>
+	
+	<select id="selectAuth" parameterType="hashmap" resultType="Auth">
+		SELECT
+			id,
+			authority_cd
+		FROM authority
+		WHERE id = #{id}
+	</select>
+	<insert id="insertAuth" parameterType="Auth">
+		INSERT INTO authority (
+			id,
+			authority_cd
+		) VALUES (
+			#{id},
+			#(authority_cd)
+		)
+	</insert>
+	<delete id="deleteAuth" parameterType="Auth">
+		DELETE FROM authority where id = #{id} AND authority_cd = #{authority_cd}
+	</delete>
+	<select id="selectAuthority" parameterType="Admst" resultType="string">
+		SELECT
+			authority_cd
+		FROM authority
+		WHERE id = #{id}	
+	</select>
 	
 </mapper>

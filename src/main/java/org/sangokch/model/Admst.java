@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Admst {
 
+	private String stt;
 	private String id;
 	private String name;
 	private String passwd;
@@ -12,6 +13,12 @@ public class Admst {
 	private String attr;
 	private List<String> authorities;
 	
+	public String getStt() {
+		return stt;
+	}
+	public void setStt(String stt) {
+		this.stt = stt;
+	}
 	public String getId() {
 		return id;
 	}

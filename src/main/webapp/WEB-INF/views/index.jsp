@@ -100,7 +100,7 @@
                         </li>
                     </ul>
                     <form class="d-flex ms-auto" role="search" v-on:submit.prevent="parseBibleHymn">
-                        <input v-model="searchText" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <input v-model="searchText" class="form-control me-2" type="search" placeholder="성경말씀 또는 찬송가" aria-label="성경말씀 또는 찬송가">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                 </div>

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.sangokch.model.Admst;
 import org.sangokch.model.AttchFile;
+import org.sangokch.model.Auth;
 import org.sangokch.model.Board;
 import org.sangokch.model.Menu;
 import org.sangokch.model.ResponseData;
@@ -62,7 +63,7 @@ public class DefaultController {
 	}
 	
 	@RequestMapping("/doLogin")
-	public @ResponseBody ResponseData doLogin(@RequestBody Map<String, String> params, HttpServletRequest request) {
+	public @ResponseBody ResponseData doLogin(@RequestBody Map<String, Object> params, HttpServletRequest request) {
 		logger.info("id: {}, passwd: {}", params.get("id"), params.get("passwd"));
 		ResponseData res = getRes("success");
 		
@@ -140,6 +141,63 @@ public class DefaultController {
 		}
 		res.setData(list);
 		return res;
+	}
+	
+	@RequestMapping("/admst/select")
+	public @ResponseBody ResponseData selectAdmstList(@RequestBody Map<String, Object> params) {
+		ResponseData res = getRes("success");
+		List<Admst> list = admstService.selectAdmstList(params);
+		res.setData(list);
+		return res;
+	}
+	
+	@RequestMapping("/admst/save")
+	public @ResponseBody ResponseData saveAdmstList(@RequestBody List<Admst> params) {
+		
+		ResponseData res = getRes("success");
+		
+		admstService.saveAdmstList(params);
+		
+		return res;
+		
+	}
+	
+	@RequestMapping("/auth/select")
+	public @ResponseBody ResponseData selectAuth(@RequestBody Map<String, Object> params) {
+		ResponseData res = getRes("success");
+		List<Auth> list = admstService.selectAuth(params);
+		res.setData(list);
+		return res;
+	}
+	
+	@RequestMapping("/auth/save")
+	public @ResponseBody ResponseData saveAuth(List<Auth> params) {
+		
+		ResponseData res = getRes("success");
+		
+		admstService.saveAuthList(params);
+		
+		return res;
+		
+	}
+	
+	@RequestMapping("/menu/select")
+	public @ResponseBody ResponseData selectMenu(@RequestBody Map<String, Object> params) {
+		ResponseData res = getRes("success");
+		List<Menu> list = menuService.selectMenu(params);
+		res.setData(list);
+		return res;
+	}
+	
+	@RequestMapping("/menu/save")
+	public @ResponseBody ResponseData saveMenu(List<Menu> params) {
+		
+		ResponseData res = getRes("success");
+		
+		menuService.saveMenu(params);
+		
+		return res;
+		
 	}
 	
 	@RequestMapping("/test")
