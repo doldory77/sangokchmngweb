@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>관리자</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/mng/css/style.css">
     <script src="https://unpkg.com/vue@3"></script>
@@ -28,6 +29,7 @@
     <script src="/mng/js/menu02/Menu0202.js"></script>
     <script src="/mng/js/menu02/Menu0203.js"></script>
     <script src="/mng/js/menu04/Menu0401.js"></script>
+    <script src="/mng/js/menu05/Menu0501.js"></script>
     <!--<script src="/js/etc/Temp.js"></script>
     -->
 </head>
@@ -98,6 +100,14 @@
                                 <li><router-link class="dropdown-item" to="/menu0401">교회소식</router-link></li>
                             </ul>
                         </li>
+                        <li class="nav-item dropdown disabled">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink4" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              시스템
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink4">
+                                <li><router-link class="dropdown-item" to="/menu0501">권한</router-link></li>
+                            </ul>
+                        </li>
                     </ul>
                     <form class="d-flex ms-auto" role="search" v-on:submit.prevent="parseBibleHymn">
                         <input v-model="searchText" class="form-control me-2" type="search" placeholder="성경말씀 또는 찬송가" aria-label="성경말씀 또는 찬송가">
@@ -143,6 +153,7 @@
             {name:'MENU0202', path:'/menu0202', component:Menu0202},
             {name:'MENU0203', path:'/menu0203', component:Menu0203},
             {name:'MENU0401', path:'/menu0401', component:Menu0401},
+            {name:'MENU0501', path:'/menu0501', component:Menu0501},
             // {name:'Menu03', path:'/menu03', component:Temp},
             
         ]
