@@ -49,6 +49,7 @@ public class BoardService {
 					file.setFile_nm(fileNames[i]);
 					file.setFile_path(Const.userDir.concat(filePath));
 					file.setFile_org_nm(files[i].getOriginalFilename());
+					file.setFile_size(files[i].getSize());
 					boardMapper.insertFile(file);
 					File saveFile = new File(file.getFile_path(), file.getFile_nm());
 					files[i].transferTo(saveFile);

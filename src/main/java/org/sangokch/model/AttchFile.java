@@ -6,6 +6,7 @@ public class AttchFile {
 	private String file_nm;
 	private String file_org_nm;
 	private String file_path;
+	private long file_size;
 	
 	public int getBno() {
 		return bno;
@@ -30,6 +31,12 @@ public class AttchFile {
 	}
 	public void setFile_path(String file_path) {
 		this.file_path = file_path;
+	}
+	public long getFile_size() {
+		return file_size;
+	}
+	public void setFile_size(long file_size) {
+		this.file_size = file_size;
 	}
 	
 }
