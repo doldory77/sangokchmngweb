@@ -16,14 +16,18 @@ const Menu0501 = {
     template: `
         <main class="container">
             <md-header :title="'관리자 권한'"></md-header>
-            <div class="row">
-                <div class="col-lg-9">
+            <div class="row mb-1">
+                <div class="col-lg-9 text-end">
+                    <a href="#" class="btn btn-sm btn-primary">추가</a>
+                    <a href="#" class="btn btn-sm btn-primary ms-1 bg-success">저장</a>
                 </div>
                 <div class="col-lg-3">
+
                 </div>
             </div>
             <div class="row g-5">
                 <div class="col-lg-9">
+                    
                     <div class="row bg-light border-bottom text-center d-none d-md-flex">
                         <div class="col-md-1">&nbsp;</div>
                         <div class="col-md-2">id</div>
@@ -33,6 +37,7 @@ const Menu0501 = {
                         <div class="col-md-1">use</div>
                         <div class="col-md-3">비고</div>
                     </div>
+
                     <div class="row border text-left py-1">
                         <div class="col-md-1">
                             <span class="material-symbols-outlined">close</span>
@@ -75,12 +80,39 @@ const Menu0501 = {
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-3">
+                    
+                    <div class="row py-1">
+                        <select class="w-50 col-sm-8 form-select form-select-sm" aria-label=".form-select-sm example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+
+                        <a href="#" class="col-sm-2 ms-auto btn btn-sm btn-primary">추가</a>
+                        <a href="#" class="col-sm-2 btn btn-sm btn-primary ms-1 bg-success">저장</a>
+                    </div>
+
                     <div class="row bg-light border-bottom text-center">
                         <div class="col-sm-4">&nbsp;</div>
                         <div class="col-sm-8">권한</div>
                     </div>
+                    <div class="row border text-center py-1">
+                        <div class="col-sm-4"><span class="material-symbols-outlined">close</span></div>
+                        <div class="col-sm-8">MENU0101</div>
+                    </div>
+                    <div class="row border text-center py-1">
+                        <div class="col-sm-4"><span class="material-symbols-outlined">close</span></div>
+                        <div class="col-sm-8">MENU0102</div>
+                    </div>
+                    <div class="row border text-center py-1">
+                        <div class="col-sm-4"><span class="material-symbols-outlined">close</span></div>
+                        <div class="col-sm-8">MENU0103</div>
+                    </div>
                 </div>
+
             </div>
         </main>
     `
