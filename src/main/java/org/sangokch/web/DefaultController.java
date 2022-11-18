@@ -200,10 +200,14 @@ public class DefaultController {
 		
 	}
 	
-	@RequestMapping("/test")
-	public @ResponseBody ResponseData authMenus() {
+	@RequestMapping("/menu/authMenu")
+	public @ResponseBody ResponseData authMenus(@RequestBody Map<String, Object> params) {
 		ResponseData res = getRes("success");
-		List<Menu> authMenus = menuService.selectAuthMenu();
+		boolean isAuthOnly = false;
+		if ("Y".equals(params.get("auth_only").toString())) {
+			isAuthOnly = true;
+		}
+		List<Menu> authMenus = menuService.selectAuthMenu(isAuthOnly);
 		res.setData(authMenus);
 		return res;
 	}

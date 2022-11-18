@@ -1,17 +1,74 @@
 const Menu0501 = {
     data() {
         return {
-
+            admsts: [],
+            amdAuths: [],
+            authMenus: [],
         }
     },
     created() {
-
+        this.getAuthMenus()
+        this.getAdmsts()
     },
     mounted() {
 
     },
     methods: {
-
+        async getAuthMenus() {
+            try {
+              const result = await this.$http.post("/menu/authMenu", {auth_only:"Y"}, {
+                  headers: {
+                      "Content-Type": "application/json",
+                  }
+              })
+              if (result.data && result.data.result == 'success') {
+                  this.authMenus = result.data.data
+                  console.log(this.authMenus)
+              }
+            } catch (err) {
+                console.error(err)
+                alert(err.response.data.msg)
+            }
+        },        
+        async getAdmsts() {
+            try {
+              const result = await this.$http.post("/admst/select", {}, {
+                  headers: {
+                      "Content-Type": "application/json",
+                  }
+              })
+              if (result.data && result.data.result == 'success') {
+                  this.admsts = result.data.data
+                  console.log(this.admsts)
+              }
+            } catch (err) {
+                console.error(err)
+                alert(err.response.data.msg)
+            }
+        },
+        async getAuth(e) {
+            let id = e.target.value
+            try {
+                const result = await this.$http.post("/auth/select", {id}, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                })
+                if (result.data && result.data.result == 'success') {
+                    this.amdAuths = result.data.data
+                    console.log(this.amdAuths)
+                }
+            } catch (err) {
+                console.error(err)
+                alert(err.response.data.msg)
+            }            
+        },
+        authDel(e) {
+            let index = e.target.getAttribute('data-idx')
+            console.log(index)
+            this.authMenus.splice(Number(index), 1);
+            console.log('lenght : ', this.authMenus.length)
+        }
     },
     template: `
         <main class="container">
@@ -38,14 +95,14 @@ const Menu0501 = {
                         <div class="col-md-3">비고</div>
                     </div>
 
-                    <div class="row border text-left py-1">
+                    <div  v-for="(item, idx) in admsts" :key="idx" class="row border text-left py-1">
                         <div class="col-md-1">
                             <span class="material-symbols-outlined">close</span>
                         </div>
                         <div class="col-md-2">
                             <div>
-                                <label for="id" class="d-inline-block d-md-none">id</label>
-                                <input type="text" class="form-control form-control-sm" id="id" placeholder="id를 입력">
+                                <label :for="'id' + idx" class="d-inline-block d-md-none">id</label>
+                                <input @focus="getAuth" type="text" class="form-control form-control-sm" :id="'id' + idx" placeholder="id를 입력" :value="item.id">
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -85,10 +142,8 @@ const Menu0501 = {
                     
                     <div class="row py-1">
                         <select class="w-50 col-sm-8 form-select form-select-sm" aria-label=".form-select-sm example">
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option selected>권한선택</option>
+                            <option v-for="(item, idx) in authMenus" :key="idx" :value="item.menu_cd">{{ item.menu_nm }}</option>
                         </select>
 
                         <a href="#" class="col-sm-2 ms-auto btn btn-sm btn-primary">추가</a>
@@ -99,18 +154,14 @@ const Menu0501 = {
                         <div class="col-sm-4">&nbsp;</div>
                         <div class="col-sm-8">권한</div>
                     </div>
-                    <div class="row border text-center py-1">
-                        <div class="col-sm-4"><span class="material-symbols-outlined">close</span></div>
-                        <div class="col-sm-8">MENU0101</div>
+
+                    <div v-for="(item, idx) in amdAuths" :key="idx" class="row border text-center py-1">
+                        <div class="col-sm-4">
+                            <span @click="authDel" style="cursor:pointer;" :data-idx="idx" class="material-symbols-outlined">close</span>
+                        </div>
+                        <div class="col-sm-8">{{ item.authority_cd }}</div>
                     </div>
-                    <div class="row border text-center py-1">
-                        <div class="col-sm-4"><span class="material-symbols-outlined">close</span></div>
-                        <div class="col-sm-8">MENU0102</div>
-                    </div>
-                    <div class="row border text-center py-1">
-                        <div class="col-sm-4"><span class="material-symbols-outlined">close</span></div>
-                        <div class="col-sm-8">MENU0103</div>
-                    </div>
+                    
                 </div>
 
             </div>

@@ -18,9 +18,14 @@ public class MenuService {
 	@Autowired
 	MenuMapper menuMapper;
 	
-	public List<Menu> selectAuthMenu() {
+	public List<Menu> selectAuthMenu(boolean isAuthOnly) {
+		List<Menu> subMenus = null;
+		if (isAuthOnly) {
+			subMenus = menuMapper.selectAuthMenu();
+			return subMenus;
+		}
 		List<Menu> mainMenus = menuMapper.selectMenu(new MapX("parent_menu_cd", "00000000").getMap());
-		List<Menu> subMenus = menuMapper.selectAuthMenu();
+		subMenus = menuMapper.selectAuthMenu();
 		for (int i=0; i<mainMenus.size(); i++) {
 			mainMenus.get(i).setSubMenu(new ArrayList<Menu>());
 			for (int j=0; j<subMenus.size(); j++) {
