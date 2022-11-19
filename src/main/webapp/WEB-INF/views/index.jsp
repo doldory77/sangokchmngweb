@@ -61,7 +61,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top sg-navbar">
             <div class="container-lg">
                 <a class="navbar-brand" href="#">산곡성결교회</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button id="navBarTogglerBtn" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
@@ -157,6 +157,11 @@
             // {name:'Menu03', path:'/menu03', component:Temp},
             
         ]
+    })
+    router.beforeEach((to, from, next) => {
+        let wd = window.innerWidth || document.body.clientWidth
+        if (wd <= 991) document.getElementById("navBarTogglerBtn").click()
+        next()
     })
     const http = axios.create({
         // baseURL: "http://localhost:8081/mng",

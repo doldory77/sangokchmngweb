@@ -51,10 +51,14 @@
 	
 	<select id="selectAuth" parameterType="hashmap" resultType="Auth">
 		SELECT
-			id,
-			authority_cd
-		FROM authority
-		WHERE id = #{id}
+			a.id,
+			a.authority_cd,
+			b.menu_nm AS authority_nm
+		FROM authority a, 
+			menu b
+		WHERE a.authority_cd = b.menu_cd 
+			AND a.id = #{id}
+		ORDER BY a.authority_cd
 	</select>
 	<insert id="insertAuth" parameterType="Auth">
 		INSERT INTO authority (
@@ -62,7 +66,7 @@
 			authority_cd
 		) VALUES (
 			#{id},
-			#(authority_cd)
+			#{authority_cd}
 		)
 	</insert>
 	<delete id="deleteAuth" parameterType="Auth">

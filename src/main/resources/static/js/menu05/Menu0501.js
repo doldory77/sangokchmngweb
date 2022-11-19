@@ -96,44 +96,60 @@ const Menu0501 = {
                 this.amdAuths[Number(index)].stt = ''
             }
             console.log('this.authMenus[Number(index)].stt', this.amdAuths[Number(index)].stt)
+        },
+        authAdd() {
+            let selDom = this.$refs.authKind
+            let authCd = selDom.options[selDom.selectedIndex].value
+            let authNm = selDom.options[selDom.selectedIndex].text
+            let idx = this.amdAuths.findIndex(elem => elem.authority_cd === authCd)
+            if (idx < 0) {
+                let id = this.amdAuths[0].id
+                this.amdAuths.push({
+                    authority_cd:authCd,
+                    authority_nm:authNm,
+                    id:id,
+                    stt:"I"
+                })
+            }
+            console.log(this.amdAuths.length)
         }
     },
     template: `
         <main class="container">
             <md-header :title="'관리자 권한'"></md-header>
             <div class="row mb-1">
-                <div class="col-lg-9 text-end">
+                <div class="col-lg-8 text-end">
                     <a href="#" class="btn btn-sm btn-primary">추가</a>
                     <a href="#" class="btn btn-sm btn-primary ms-1 bg-success">저장</a>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-4">
 
                 </div>
             </div>
             <div class="row g-5">
-                <div class="col-lg-9">
+                <div class="col-lg-8">
                     
                     <div class="row bg-light border-bottom text-center d-none d-md-flex">
-                        <div class="col-md-1">&nbsp;</div>
-                        <div class="col-md-2">id</div>
-                        <div class="col-md-2">name</div>
+                        
+                        <div class="col-md-4">id</div>
+                        <div class="col-md-4">name</div>
                         <div class="col-md-2">passwd</div>
                         <div class="col-md-1">super</div>
                         <div class="col-md-1">use</div>
-                        <div class="col-md-3">비고</div>
+                        
                     </div>
 
                     <div  v-for="(item, idx) in admsts" :key="idx" class="row border text-left py-1">
-                        <div class="col-md-1">
+                        <!--<div class="col-md-1">
                             <span class="material-symbols-outlined">close</span>
-                        </div>
-                        <div class="col-md-2">
+                        </div>-->
+                        <div class="col-md-4">
                             <div>
                                 <label :for="'id' + idx" class="d-inline-block d-md-none">id</label>
                                 <input @focus="getAuth" type="text" class="form-control form-control-sm" :id="'id' + idx" placeholder="id를 입력" :value="item.id">
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <div>
                                 <label for="name" class="d-inline-block d-md-none">name</label>
                                 <input type="text" class="form-control form-control-sm" id="name" placeholder="name을 입력">
@@ -157,24 +173,19 @@ const Menu0501 = {
                                 <label class="form-check-label d-inline-block d-md-none" for="use">사용여부</label>
                             </div>                        
                         </div>
-                        <div class="col-md-3">
-                            <div>
-                                <label for="rmrk" class="d-inline-block d-md-none">비고</label>
-                                <input type="text" class="form-control form-control-sm" id="rmrk" placeholder="기타 비고">
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
 
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     
                     <div class="row py-1">
-                        <select class="w-50 col-sm-8 form-select form-select-sm" aria-label=".form-select-sm example">
+                        <select ref="authKind" class="w-50 col-sm-8 form-select form-select-sm" aria-label=".form-select-sm example">
                             <option selected>권한선택</option>
                             <option v-for="(item, idx) in authMenus" :key="idx" :value="item.menu_cd">{{ item.menu_nm }}</option>
                         </select>
 
-                        <a href="#" class="col-sm-2 ms-auto btn btn-sm btn-primary">추가</a>
+                        <a href="#" @click.prevent="authAdd" class="col-sm-2 ms-auto btn btn-sm btn-primary">추가</a>
                         <a href="#" @click.prevent="authSave" class="col-sm-2 btn btn-sm btn-primary ms-1 bg-success">저장</a>
                     </div>
 
@@ -184,13 +195,13 @@ const Menu0501 = {
                     </div>
 
                     <div v-for="(item, idx) in amdAuths" :key="idx" class="row border text-center py-1">
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <div class="form-check">
                                 <input @click="authChng" class="form-check-input" type="checkbox" value="" :data-idx="idx" :id="'authIdx' + idx" :checked="item.stt === 'D' ? true : false">
                                 <label class="form-check-label" :for="'authIdx' + idx">삭제</label>
                             </div>
                         </div>
-                        <div class="col-sm-8">{{ item.authority_cd }}<br>{{ item. }}</div>
+                        <div class="col-sm-9">{{ item.authority_nm }} [{{ item.authority_cd }}]</div>
                     </div>
                     
                 </div>
