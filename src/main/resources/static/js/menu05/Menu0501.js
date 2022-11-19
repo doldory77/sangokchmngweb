@@ -23,13 +23,33 @@ const Menu0501 = {
               })
               if (result.data && result.data.result == 'success') {
                   this.authMenus = result.data.data
+                  
                   console.log(this.authMenus)
               }
             } catch (err) {
                 console.error(err)
                 alert(err.response.data.msg)
             }
-        },        
+        },
+        async authSave() {
+            let id = this.amdAuths[0].id
+            try {
+                const result = await this.$http.post("/auth/save", this.amdAuths, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                })
+                if (result.data && result.data.result == 'success') {
+                    this.getAuth(id)
+                    // this.amdAuths = result.data.data
+                    
+                    // console.log(this.amdAuths)
+                }
+              } catch (err) {
+                  console.error(err)
+                  alert(err.response.data.msg)
+              }
+        },
         async getAdmsts() {
             try {
               const result = await this.$http.post("/admst/select", {}, {
@@ -47,7 +67,12 @@ const Menu0501 = {
             }
         },
         async getAuth(e) {
-            let id = e.target.value
+            let id = null
+            if (e.target && e.target.value) {
+                id = e.target.value
+            } else {
+                id = e
+            }
             try {
                 const result = await this.$http.post("/auth/select", {id}, {
                     headers: {
@@ -56,18 +81,21 @@ const Menu0501 = {
                 })
                 if (result.data && result.data.result == 'success') {
                     this.amdAuths = result.data.data
-                    console.log(this.amdAuths)
+                    console.log('Auths', this.amdAuths)
                 }
             } catch (err) {
                 console.error(err)
                 alert(err.response.data.msg)
             }            
         },
-        authDel(e) {
+        authChng(e) {
             let index = e.target.getAttribute('data-idx')
-            console.log(index)
-            this.authMenus.splice(Number(index), 1);
-            console.log('lenght : ', this.authMenus.length)
+            if (e.target.checked) {
+                this.amdAuths[Number(index)].stt = 'D'
+            } else {
+                this.amdAuths[Number(index)].stt = ''
+            }
+            console.log('this.authMenus[Number(index)].stt', this.amdAuths[Number(index)].stt)
         }
     },
     template: `
@@ -147,7 +175,7 @@ const Menu0501 = {
                         </select>
 
                         <a href="#" class="col-sm-2 ms-auto btn btn-sm btn-primary">추가</a>
-                        <a href="#" class="col-sm-2 btn btn-sm btn-primary ms-1 bg-success">저장</a>
+                        <a href="#" @click.prevent="authSave" class="col-sm-2 btn btn-sm btn-primary ms-1 bg-success">저장</a>
                     </div>
 
                     <div class="row bg-light border-bottom text-center">
@@ -157,9 +185,12 @@ const Menu0501 = {
 
                     <div v-for="(item, idx) in amdAuths" :key="idx" class="row border text-center py-1">
                         <div class="col-sm-4">
-                            <span @click="authDel" style="cursor:pointer;" :data-idx="idx" class="material-symbols-outlined">close</span>
+                            <div class="form-check">
+                                <input @click="authChng" class="form-check-input" type="checkbox" value="" :data-idx="idx" :id="'authIdx' + idx" :checked="item.stt === 'D' ? true : false">
+                                <label class="form-check-label" :for="'authIdx' + idx">삭제</label>
+                            </div>
                         </div>
-                        <div class="col-sm-8">{{ item.authority_cd }}</div>
+                        <div class="col-sm-8">{{ item.authority_cd }}<br>{{ item. }}</div>
                     </div>
                     
                 </div>

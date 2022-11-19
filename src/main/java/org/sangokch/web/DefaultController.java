@@ -171,7 +171,7 @@ public class DefaultController {
 	}
 	
 	@RequestMapping("/auth/save")
-	public @ResponseBody ResponseData saveAuth(List<Auth> params) {
+	public @ResponseBody ResponseData saveAuth(@RequestBody List<Auth> params) {
 		
 		ResponseData res = getRes("success");
 		
