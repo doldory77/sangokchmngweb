@@ -4,6 +4,7 @@ const Menu0501 = {
             admsts: [],
             admAuths: [],
             authMenus: [],
+            tmpAdmsts: [],
         }
     },
     created() {
@@ -113,13 +114,27 @@ const Menu0501 = {
             }
             console.log(this.admAuths.length)
         },
+        idChng(e, idx) {
+            this.tmpAdmsts[idx].id = e.target.value
+            console.log(this.tmpAdmsts[idx].id)
+        },
         nameChng(e, idx) {
-            if (!this.admsts[idx].stt) this.admsts[idx].stt = 'U'
-            this.admsts[idx].name = e.target.value
-            console.log(this.admsts[idx].name)
+            this.tmpAdmsts[idx].name = e.target.value
+            console.log(this.tmpAdmsts[idx].name)
+        },
+        passwdChng(e, idx) {
+            this.tmpAdmsts[idx].passwd = e.target.value
+        },
+        chkChng(e, idx, key) {
+            if (this.tmpAdmsts[idx][key] === 'Y') {
+                this.tmpAdmsts[idx][key] = 'N'
+            } else {
+                this.tmpAdmsts[idx][key] = 'Y'
+            }
+            console.log(this.tmpAdmsts[idx][key])
         },
         admstAdd() {
-            this.admsts.push({
+            this.tmpAdmsts.push({
                 id:'',
                 name:'',
                 passwd:'',
@@ -162,35 +177,71 @@ const Menu0501 = {
                         <div class="col-md-4">
                             <div>
                                 <label :for="'id' + idx" class="d-inline-block d-md-none">id</label>
-                                <input @focus="getAuth" type="text" class="form-control form-control-sm" :id="'id' + idx" placeholder="id를 입력" :value="item.id" :disabled="item.stt !== 'I' ? true : false">
+                                <input @focus="getAuth" type="text" class="form-control form-control-sm" :id="'id' + idx" placeholder="id를 입력" :value="item.id">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div>
                                 <label for="'name' + idx" class="d-inline-block d-md-none">name</label>
-                                <input @input="nameChng($event, idx)" type="text" class="form-control form-control-sm" :id="'name' + idx" placeholder="name을 입력" :value="item.name">
+                                <input type="text" class="form-control form-control-sm" :id="'name' + idx" placeholder="name을 입력" :value="item.name">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div>
                                 <label for="passwd" class="d-inline-block d-md-none">passwd</label>
-                                <input type="text" class="form-control form-control-sm" id="passwd" placeholder="passwd를 입력" :disabled="item.stt !== 'I' ? true : false">
+                                <input type="text" class="form-control form-control-sm" id="passwd" placeholder="passwd를 입력">
                             </div>                        
                         </div>
                         <div class="col-md-1">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" :id="'super' + idx" :checked="item.super_yn == 'Y' ? true : false" @click="chngSuper(idx)">
+                                <input class="form-check-input" type="checkbox" value="" :id="'super' + idx" :checked="item.super_yn == 'Y' ? true : false">
                                 <label class="form-check-label d-inline-block d-md-none" for="'super' + idx">슈퍼관리자</label>
                             </div>                        
                         </div>
                         <div class="col-md-1">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" :id="'use' + idx" :checked="item.use_yn == 'Y' ? true : false" @click="chngUse(idx)">
+                                <input class="form-check-input" type="checkbox" value="" :id="'use' + idx" :checked="item.use_yn == 'Y' ? true : false">
                                 <label class="form-check-label d-inline-block d-md-none" for="'use' + idx">사용여부</label>
                             </div>                        
                         </div>
                         
                     </div>
+
+                    <div  v-for="(item, idx) in tmpAdmsts" :key="idx" class="row border text-left py-1">
+                        <div class="col-md-4">
+                            <div>
+                                <label for="id" class="d-inline-block d-md-none">id</label>
+                                <input @input="idChng($event, idx)" type="text" class="form-control form-control-sm" id="id" placeholder="id를 입력" :value="item.id">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div>
+                                <label for="name" class="d-inline-block d-md-none">name</label>
+                                <input @input="nameChng($event, idx)" type="text" class="form-control form-control-sm" id="name" placeholder="name을 입력" :value="item.name">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div>
+                                <label for="passwd" class="d-inline-block d-md-none">passwd</label>
+                                <input @input="passwdChng($event, idx)" type="text" class="form-control form-control-sm" id="passwd" placeholder="passwd를 입력">
+                            </div>                        
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-check">
+                                <input @click="chkChng($event, idx, 'super_yn')" class="form-check-input" type="checkbox" value="" :id="'super' + idx" :checked="item.super_yn == 'Y' ? true : false">
+                                <label class="form-check-label d-inline-block d-md-none" for="'super' + idx">슈퍼관리자</label>
+                            </div>                        
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-check">
+                                <input @click="chkChng($event, idx, 'use_yn')" class="form-check-input" type="checkbox" value="" :id="'use' + idx" :checked="item.use_yn == 'Y' ? true : false">
+                                <label class="form-check-label d-inline-block d-md-none" for="'use' + idx">사용여부</label>
+                            </div>                        
+                        </div>
+                        
+                    </div>
+
+
                 </div>
 
                 <div class="col-lg-4">
