@@ -59,7 +59,7 @@ const Menu0501 = {
               })
               if (result.data && result.data.result == 'success') {
                   this.admsts = result.data.data
-                  //console.log(this.admsts)
+                  console.log(this.admsts)
               }
             } catch (err) {
                 console.error(err)
@@ -112,14 +112,30 @@ const Menu0501 = {
                 })
             }
             console.log(this.admAuths.length)
-        }
+        },
+        nameChng(e, idx) {
+            if (!this.admsts[idx].stt) this.admsts[idx].stt = 'U'
+            this.admsts[idx].name = e.target.value
+            console.log(this.admsts[idx].name)
+        },
+        admstAdd() {
+            this.admsts.push({
+                id:'',
+                name:'',
+                passwd:'',
+                stt:'I',
+                super_yn:'N',
+                use_yn:'Y'
+            })
+            
+        },        
     },
     template: `
         <main class="container">
             <md-header :title="'관리자 권한'"></md-header>
             <div class="row mb-1">
                 <div class="col-lg-8 text-end">
-                    <a href="#" class="btn btn-sm btn-primary">추가</a>
+                    <a href="#" @click.prevent="admstAdd" class="btn btn-sm btn-primary">추가</a>
                     <a href="#" class="btn btn-sm btn-primary ms-1 bg-success">저장</a>
                 </div>
                 <div class="col-lg-4">
@@ -132,8 +148,8 @@ const Menu0501 = {
                     <div class="row bg-light border-bottom text-center d-none d-md-flex">
                         
                         <div class="col-md-4">id</div>
-                        <div class="col-md-4">name</div>
-                        <div class="col-md-2">passwd</div>
+                        <div class="col-md-3">name</div>
+                        <div class="col-md-3">passwd</div>
                         <div class="col-md-1">super</div>
                         <div class="col-md-1">use</div>
                         
@@ -146,19 +162,19 @@ const Menu0501 = {
                         <div class="col-md-4">
                             <div>
                                 <label :for="'id' + idx" class="d-inline-block d-md-none">id</label>
-                                <input @focus="getAuth" type="text" class="form-control form-control-sm" :id="'id' + idx" placeholder="id를 입력" :value="item.id">
+                                <input @focus="getAuth" type="text" class="form-control form-control-sm" :id="'id' + idx" placeholder="id를 입력" :value="item.id" :disabled="item.stt !== 'I' ? true : false">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div>
                                 <label for="'name' + idx" class="d-inline-block d-md-none">name</label>
-                                <input type="text" class="form-control form-control-sm" :id="'name' + idx" placeholder="name을 입력" :value="item.name">
+                                <input @input="nameChng($event, idx)" type="text" class="form-control form-control-sm" :id="'name' + idx" placeholder="name을 입력" :value="item.name">
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div>
                                 <label for="passwd" class="d-inline-block d-md-none">passwd</label>
-                                <input type="text" class="form-control form-control-sm" id="passwd" placeholder="passwd를 입력">
+                                <input type="text" class="form-control form-control-sm" id="passwd" placeholder="passwd를 입력" :disabled="item.stt !== 'I' ? true : false">
                             </div>                        
                         </div>
                         <div class="col-md-1">
