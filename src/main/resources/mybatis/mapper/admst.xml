@@ -26,13 +26,17 @@
 		INSERT INTO admst (
 			id,
 			name,
-			passwd,
-			attr
+			<if test='attr neq null and attr neq ""'>
+			attr,
+			</if>
+			passwd
 		) VALUES (
 			#{id},
 			#{name},
-			MD5(#{passwd}),
-			#{attr}
+			<if test='attr neq null and attr neq ""'>
+			#{attr},
+			</if>
+			MD5(#{passwd})
 		)	
 	</insert>
 	<update id="updateAdmst" parameterType="Admst">

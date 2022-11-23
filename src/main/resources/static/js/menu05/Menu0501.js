@@ -8,14 +8,14 @@ const Menu0501 = {
         }
     },
     created() {
-        this.getAuthMenus()
-        this.getAdmsts()
+        this.selectAuthMenus()
+        this.selectAdmsts()
     },
     mounted() {
 
     },
     methods: {
-        async getAuthMenus() {
+        async selectAuthMenus() {
             try {
               const result = await this.$http.post("/menu/authMenu", {auth_only:"Y"}, {
                   headers: {
@@ -32,7 +32,7 @@ const Menu0501 = {
                 alert(err.response.data.msg)
             }
         },
-        async authSave() {
+        async saveAuth() {
             let id = this.admAuths[0].id
             try {
                 const result = await this.$http.post("/auth/save", this.admAuths, {
@@ -51,7 +51,7 @@ const Menu0501 = {
                   alert(err.response.data.msg)
               }
         },
-        async getAdmsts() {
+        async selectAdmsts() {
             try {
               const result = await this.$http.post("/admst/select", {}, {
                   headers: {
@@ -67,6 +67,23 @@ const Menu0501 = {
                 alert(err.response.data.msg)
             }
         },
+        async saveAdmsts() {
+            let admst = this.tmpAdmsts[0]
+            try {
+                const result = await this.$http.post("/admst/save", [admst], {
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                })
+                if (result.data && result.data.result == 'success') {
+                    this.selectAdmsts()
+                    this.tmpAdmsts.pop()
+                }
+              } catch (err) {
+                  console.error(err)
+                  alert(err.response.data.msg)
+              }
+        },        
         async getAuth(e) {
             let id = null
             if (e.target && e.target.value) {
@@ -98,7 +115,7 @@ const Menu0501 = {
             }
             console.log('this.authMenus[Number(index)].stt', this.admAuths[Number(index)].stt)
         },
-        authAdd() {
+        addAuth() {
             let selDom = this.$refs.authKind
             let authCd = selDom.options[selDom.selectedIndex].value
             let authNm = selDom.options[selDom.selectedIndex].text
@@ -124,6 +141,7 @@ const Menu0501 = {
         },
         passwdChng(e, idx) {
             this.tmpAdmsts[idx].passwd = e.target.value
+            console.log(this.tmpAdmsts[idx].passwd)
         },
         chkChng(e, idx, key) {
             if (this.tmpAdmsts[idx][key] === 'Y') {
@@ -133,7 +151,19 @@ const Menu0501 = {
             }
             console.log(this.tmpAdmsts[idx][key])
         },
-        admstAdd() {
+        cancelAdmst() {
+            if (this.tmpAdmsts.length > 0) {
+                this.tmpAdmsts.pop()
+            }
+        },
+        addAdmst() {
+            if (this.tmpAdmsts.length > 0) {
+                if (confirm('저장하지 않은 데이터가 있습니다.\n계속 진행하시겠습니까?')) {
+                    this.tmpAdmsts.pop()               
+                } else {
+                    return
+                }
+            }
             this.tmpAdmsts.push({
                 id:'',
                 name:'',
@@ -142,16 +172,26 @@ const Menu0501 = {
                 super_yn:'N',
                 use_yn:'Y'
             })
+        }, 
+        modifyAdmst(idx) {
+            if (this.tmpAdmsts.length > 0) {
+                if (confirm('저장하지 않은 데이터가 있습니다.\n계속 진행하시겠습니까?')) {
+                    this.tmpAdmsts.pop()               
+                } else {
+                    return
+                }
+            }
             
-        },        
+            this.tmpAdmsts.push({...this.admsts[idx], ...{stt:'U'}})            
+        }       
     },
     template: `
         <main class="container">
             <md-header :title="'관리자 권한'"></md-header>
             <div class="row mb-1">
                 <div class="col-lg-8 text-end">
-                    <a href="#" @click.prevent="admstAdd" class="btn btn-sm btn-primary">추가</a>
-                    <a href="#" class="btn btn-sm btn-primary ms-1 bg-success">저장</a>
+                    <a href="#" @click.prevent="addAdmst" class="btn btn-sm btn-primary">추가</a>
+                    <a href="#" @click.prevent="cancelAdmst" class="btn btn-sm btn-success ms-1">취소</a>
                 </div>
                 <div class="col-lg-4">
 
@@ -162,11 +202,12 @@ const Menu0501 = {
                     
                     <div class="row bg-light border-bottom text-center d-none d-md-flex">
                         
-                        <div class="col-md-4">id</div>
+                        <div class="col-md-3">id</div>
                         <div class="col-md-3">name</div>
                         <div class="col-md-3">passwd</div>
                         <div class="col-md-1">super</div>
                         <div class="col-md-1">use</div>
+                        <div class="col-md-1">fun</div>
                         
                     </div>
 
@@ -174,7 +215,7 @@ const Menu0501 = {
                         <!--<div class="col-md-1">
                             <span class="material-symbols-outlined">close</span>
                         </div>-->
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div>
                                 <label :for="'id' + idx" class="d-inline-block d-md-none">id</label>
                                 <input @focus="getAuth" type="text" class="form-control form-control-sm" :id="'id' + idx" placeholder="id를 입력" :value="item.id">
@@ -204,11 +245,14 @@ const Menu0501 = {
                                 <label class="form-check-label d-inline-block d-md-none" for="'use' + idx">사용여부</label>
                             </div>                        
                         </div>
+                        <div class="col-md-1">
+                            <a href="#" @click.prevent="modifyAdmst(idx)" class="btn btn-sm btn-primary ms-1 bg-warning">M</a>
+                        </div>
                         
                     </div>
 
-                    <div  v-for="(item, idx) in tmpAdmsts" :key="idx" class="row border text-left py-1">
-                        <div class="col-md-4">
+                    <div  v-for="(item, idx) in tmpAdmsts" :key="idx" class="row border border-danger text-left py-1">
+                        <div class="col-md-3">
                             <div>
                                 <label for="id" class="d-inline-block d-md-none">id</label>
                                 <input @input="idChng($event, idx)" type="text" class="form-control form-control-sm" id="id" placeholder="id를 입력" :value="item.id">
@@ -223,7 +267,7 @@ const Menu0501 = {
                         <div class="col-md-3">
                             <div>
                                 <label for="passwd" class="d-inline-block d-md-none">passwd</label>
-                                <input @input="passwdChng($event, idx)" type="text" class="form-control form-control-sm" id="passwd" placeholder="passwd를 입력">
+                                <input @input="passwdChng($event, idx)" type="password" class="form-control form-control-sm" id="passwd" placeholder="passwd를 입력">
                             </div>                        
                         </div>
                         <div class="col-md-1">
@@ -237,6 +281,9 @@ const Menu0501 = {
                                 <input @click="chkChng($event, idx, 'use_yn')" class="form-check-input" type="checkbox" value="" :id="'use' + idx" :checked="item.use_yn == 'Y' ? true : false">
                                 <label class="form-check-label d-inline-block d-md-none" for="'use' + idx">사용여부</label>
                             </div>                        
+                        </div>
+                        <div class="col-md-1 text-center">
+                            <a href="#" @click.prevent="saveAdmsts" class="btn btn-sm btn-primary ms-1 bg-success">S</a>
                         </div>
                         
                     </div>
@@ -252,8 +299,8 @@ const Menu0501 = {
                             <option v-for="(item, idx) in authMenus" :key="idx" :value="item.menu_cd">{{ item.menu_nm }}</option>
                         </select>
                         <div class="col-sm-4 ms-auto text-end">
-                            <a href="#" @click.prevent="authAdd" class="btn btn-sm btn-primary">추가</a>
-                            <a href="#" @click.prevent="authSave" class="btn btn-sm btn-primary ms-1 bg-success">저장</a>
+                            <a href="#" @click.prevent="addAuth" class="btn btn-sm btn-primary">추가</a>
+                            <a href="#" @click.prevent="saveAuth" class="btn btn-sm btn-primary ms-1 bg-success">저장</a>
                         </div>
                     </div>
 
