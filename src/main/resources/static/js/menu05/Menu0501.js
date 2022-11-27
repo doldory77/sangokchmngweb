@@ -5,6 +5,7 @@ const Menu0501 = {
             admAuths: [],
             authMenus: [],
             tmpAdmsts: [],
+            selectedId: '',
         }
     },
     created() {
@@ -33,7 +34,15 @@ const Menu0501 = {
             }
         },
         async saveAuth() {
-            let id = this.admAuths[0].id
+            let id = this.selectedId
+            if (!id) {
+                alert('선택된 사용자가 없습니다.')
+                return
+            }
+            if (this.admAuths.length < 1) {
+                alert('저장할 권한이 없습니다.')
+                return
+            }
             try {
                 const result = await this.$http.post("/auth/save", this.admAuths, {
                     headers: {
@@ -91,6 +100,7 @@ const Menu0501 = {
             } else {
                 id = e
             }
+            this.selectedId = id
             try {
                 const result = await this.$http.post("/auth/select", {id}, {
                     headers: {
@@ -116,12 +126,17 @@ const Menu0501 = {
             console.log('this.authMenus[Number(index)].stt', this.admAuths[Number(index)].stt)
         },
         addAuth() {
+            if (!this.selectedId) {
+                alert('사용자를 선태하고 권한버튼을 눌러주세요')
+                return
+            }
             let selDom = this.$refs.authKind
             let authCd = selDom.options[selDom.selectedIndex].value
             let authNm = selDom.options[selDom.selectedIndex].text
             let idx = this.admAuths.findIndex(elem => elem.authority_cd === authCd)
+            if (!authCd) return
             if (idx < 0) {
-                let id = this.admAuths[0].id
+                let id = this.selectedId
                 this.admAuths.push({
                     authority_cd:authCd,
                     authority_nm:authNm,
@@ -130,6 +145,10 @@ const Menu0501 = {
                 })
             }
             console.log(this.admAuths.length)
+        },
+        cancelAuth() {
+            this.selectedId = ''
+            this.admAuths = []
         },
         idChng(e, idx) {
             this.tmpAdmsts[idx].id = e.target.value
@@ -191,7 +210,6 @@ const Menu0501 = {
             <div class="row mb-1">
                 <div class="col-lg-8 text-end">
                     <a href="#" @click.prevent="addAdmst" class="btn btn-sm btn-primary">추가</a>
-                    <a href="#" @click.prevent="cancelAdmst" class="btn btn-sm btn-success ms-1">취소</a>
                 </div>
                 <div class="col-lg-4">
 
@@ -203,11 +221,11 @@ const Menu0501 = {
                     <div class="row bg-light border-bottom text-center d-none d-md-flex">
                         
                         <div class="col-md-3">id</div>
-                        <div class="col-md-3">name</div>
+                        <div class="col-md-2">name</div>
                         <div class="col-md-3">passwd</div>
                         <div class="col-md-1">super</div>
                         <div class="col-md-1">use</div>
-                        <div class="col-md-1">fun</div>
+                        <div class="col-md-2"></div>
                         
                     </div>
 
@@ -218,47 +236,48 @@ const Menu0501 = {
                         <div class="col-md-3">
                             <div>
                                 <label :for="'id' + idx" class="d-inline-block d-md-none">id</label>
-                                <input @focus="getAuth" type="text" class="form-control form-control-sm" :id="'id' + idx" placeholder="id를 입력" :value="item.id">
+                                <input disabled type="text" class="form-control form-control-sm" :id="'id' + idx" placeholder="id를 입력" :value="item.id">
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div>
                                 <label for="'name' + idx" class="d-inline-block d-md-none">name</label>
-                                <input type="text" class="form-control form-control-sm" :id="'name' + idx" placeholder="name을 입력" :value="item.name">
+                                <input disabled type="text" class="form-control form-control-sm" :id="'name' + idx" placeholder="name을 입력" :value="item.name">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div>
                                 <label for="passwd" class="d-inline-block d-md-none">passwd</label>
-                                <input type="text" class="form-control form-control-sm" id="passwd" placeholder="passwd를 입력">
+                                <input disabled type="text" class="form-control form-control-sm" id="passwd" placeholder="passwd를 입력">
                             </div>                        
                         </div>
                         <div class="col-md-1">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" :id="'super' + idx" :checked="item.super_yn == 'Y' ? true : false">
+                                <input disabled class="form-check-input" type="checkbox" value="" :id="'super' + idx" :checked="item.super_yn == 'Y' ? true : false">
                                 <label class="form-check-label d-inline-block d-md-none" for="'super' + idx">슈퍼관리자</label>
                             </div>                        
                         </div>
                         <div class="col-md-1">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" :id="'use' + idx" :checked="item.use_yn == 'Y' ? true : false">
+                                <input disabled class="form-check-input" type="checkbox" value="" :id="'use' + idx" :checked="item.use_yn == 'Y' ? true : false">
                                 <label class="form-check-label d-inline-block d-md-none" for="'use' + idx">사용여부</label>
                             </div>                        
                         </div>
-                        <div class="col-md-1">
-                            <a href="#" @click.prevent="modifyAdmst(idx)" class="btn btn-sm btn-primary ms-1 bg-warning">M</a>
+                        <div class="col-md-2 text-center">
+                            <a href="#" @click.prevent="modifyAdmst(idx)" class="btn btn-sm btn-primary ms-1 mt-1">수정</a>
+                            <a href="#" @click.prevent="getAuth(item.id)" class="btn btn-sm btn-warning ms-1 mt-1">권한</a>
                         </div>
                         
                     </div>
-
-                    <div  v-for="(item, idx) in tmpAdmsts" :key="idx" class="row border border-danger text-left py-1">
+                    
+                    <div v-for="(item, idx) in tmpAdmsts" :key="idx" class="row border border-danger text-left mt-2 py-1">
                         <div class="col-md-3">
                             <div>
                                 <label for="id" class="d-inline-block d-md-none">id</label>
                                 <input @input="idChng($event, idx)" type="text" class="form-control form-control-sm" id="id" placeholder="id를 입력" :value="item.id">
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div>
                                 <label for="name" class="d-inline-block d-md-none">name</label>
                                 <input @input="nameChng($event, idx)" type="text" class="form-control form-control-sm" id="name" placeholder="name을 입력" :value="item.name">
@@ -282,8 +301,9 @@ const Menu0501 = {
                                 <label class="form-check-label d-inline-block d-md-none" for="'use' + idx">사용여부</label>
                             </div>                        
                         </div>
-                        <div class="col-md-1 text-center">
-                            <a href="#" @click.prevent="saveAdmsts" class="btn btn-sm btn-primary ms-1 bg-success">S</a>
+                        <div class="col-md-2 text-center">
+                            <a href="#" @click.prevent="saveAdmsts" class="btn btn-sm btn-primary ms-1 bg-success">저장</a>
+                            <a href="#" @click.prevent="cancelAdmst" class="btn btn-sm btn-danger ms-1">취소</a>
                         </div>
                         
                     </div>
@@ -294,19 +314,20 @@ const Menu0501 = {
                 <div class="col-lg-4">
                     
                     <div class="row py-1">
-                        <select ref="authKind" class="w-50 col-sm-8 form-select form-select-sm" aria-label=".form-select-sm example">
-                            <option selected>권한선택</option>
+                        <select ref="authKind" class="w-50 col-sm-6 form-select form-select-sm" aria-label=".form-select-sm example">
+                            <option selected value="">권한선택</option>
                             <option v-for="(item, idx) in authMenus" :key="idx" :value="item.menu_cd">{{ item.menu_nm }}</option>
                         </select>
-                        <div class="col-sm-4 ms-auto text-end">
-                            <a href="#" @click.prevent="addAuth" class="btn btn-sm btn-primary">추가</a>
-                            <a href="#" @click.prevent="saveAuth" class="btn btn-sm btn-primary ms-1 bg-success">저장</a>
+                        <div class="col-sm-6 ms-auto text-end">
+                            <a href="#" @click.prevent="addAuth" class="btn btn-sm btn-primary mt-1">추가</a>
+                            <a href="#" @click.prevent="saveAuth" class="btn btn-sm btn-success ms-1 mt-1">저장</a>
+                            <a href="#" @click.prevent="cancelAuth" class="btn btn-sm btn-danger ms-1 mt-1">취소</a>
                         </div>
                     </div>
 
                     <div class="row bg-light border-bottom text-center">
-                        <div class="col-sm-4">&nbsp;</div>
-                        <div class="col-sm-8">권한</div>
+                        <div class="col-sm-5">{{ selectedId }}</div>
+                        <div class="col-sm-7">권한</div>
                     </div>
 
                     <div v-for="(item, idx) in admAuths" :key="idx" class="row border text-center py-1">
