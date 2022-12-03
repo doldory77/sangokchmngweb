@@ -26,6 +26,7 @@
 		INSERT INTO admst (
 			id,
 			name,
+			sn,
 			<if test='attr neq null and attr neq ""'>
 			attr,
 			</if>
@@ -33,6 +34,7 @@
 		) VALUES (
 			#{id},
 			#{name},
+			(SELECT IFNULL(MAX(sn), 0)+1 FROM admst),	
 			<if test='attr neq null and attr neq ""'>
 			#{attr},
 			</if>
@@ -82,5 +84,30 @@
 		FROM authority
 		WHERE id = #{id}	
 	</select>
+	
+	<select id="selectDashBoard" parameterType="hashmap" resultType="hashmap">
+		SELECT
+			COUNT(*) AS cnt,
+			fun_fmt_date(SUBSTR(MAX(WRITE_dt), 1, 8)) AS last_updt
+		FROM board
+		WHERE kind_cd = 'MENU0202'
+		UNION ALL
+		SELECT
+			COUNT(*) AS cnt,
+			fun_fmt_date(SUBSTR(MAX(WRITE_dt), 1, 8)) AS last_updt
+		FROM board
+		WHERE kind_cd = 'MENU0203'
+		UNION ALL
+		SELECT
+			COUNT(*) AS cnt,
+			fun_fmt_date(SUBSTR(MAX(WRITE_dt), 1, 8)) AS last_updt
+		FROM board
+		WHERE kind_cd = 'MENU0401'
+		UNION ALL
+		SELECT
+			COUNT(*) AS cnt,
+			(select name from admst where sn = (select max(sn) from admst)) AS last_updt
+		FROM admst
+	</select>	
 	
 </mapper>

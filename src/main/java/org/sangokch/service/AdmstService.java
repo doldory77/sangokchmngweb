@@ -70,4 +70,8 @@ public class AdmstService {
 			}
 		}
 	}
+	
+	public List<Map<String, Object>> selectDashBoard(Map<String, Object> params) {
+		return admstMapper.selectDashBoard(params);
+	}	
 }

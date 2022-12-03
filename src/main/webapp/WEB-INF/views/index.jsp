@@ -33,7 +33,7 @@
     <!--<script src="/js/etc/Temp.js"></script>
     -->
 </head>
-<body>
+<body class="bg-light bg-opacity-50">
     <div id="app" style="padding-top: 56px;">
         <div class="modal fade" id="exampleModalScrollable" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-dialog-scrollable">
@@ -124,15 +124,15 @@
     <!-- <div class="sg-divider my-5"></div> -->
     <hr class="sg-line-divider">
 
-    <footer class="text-muted py-5">
+    <footer class="py-5 text-dark">
         <div class="container">
             <p class="float-end mb-1">
                 <a href="#">Back to top</a>
             </p>
-            <p class="mb-1">Album example is © Bootstrap, but please download and customize it for yourself!</p>
-            <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="/docs/5.1/getting-started/introduction/">getting started guide</a>.</p>
+            <p class="text-center fs-5 mb-1 ps-5">403020 인천광역시 부평구 길주로 326번길 13</p>
+            <p class="text-center fs-5 mb-0 pe-5">032) 513-3434 (Fax 겸용)</p>
         </div>
-    </footer>
+    </footer>    
 
 </body>
 <script>

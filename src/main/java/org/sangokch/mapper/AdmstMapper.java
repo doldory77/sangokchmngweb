@@ -20,4 +20,6 @@ public interface AdmstMapper {
 	public List<Auth> selectAuth(Map<String, Object> params);
 	public void insertAuth(Auth auth);
 	public void deleteAuth(Auth auth);
+	
+	public List<Map<String, Object>> selectDashBoard(Map<String, Object> params);
 }

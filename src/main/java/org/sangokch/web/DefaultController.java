@@ -143,6 +143,14 @@ public class DefaultController {
 		return res;
 	}
 	
+	@RequestMapping("/home/select")
+	public @ResponseBody ResponseData selectDashBoard(@RequestBody Map<String, Object> params) {
+		ResponseData res = getRes("success");
+		List<Map<String, Object>> list = admstService.selectDashBoard(params);
+		res.setData(list);
+		return res;
+	}	
+	
 	@RequestMapping("/admst/select")
 	public @ResponseBody ResponseData selectAdmstList(@RequestBody Map<String, Object> params) {
 		ResponseData res = getRes("success");
