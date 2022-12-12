@@ -87,24 +87,32 @@
 	
 	<select id="selectDashBoard" parameterType="hashmap" resultType="hashmap">
 		SELECT
+			'교회주보' AS name,
+			'MENU0202' AS menu,
 			COUNT(*) AS cnt,
 			fun_fmt_date(SUBSTR(MAX(WRITE_dt), 1, 8)) AS last_updt
 		FROM board
 		WHERE kind_cd = 'MENU0202'
 		UNION ALL
 		SELECT
+			'주일설교' AS name,
+			'MENU0203' AS menu,
 			COUNT(*) AS cnt,
 			fun_fmt_date(SUBSTR(MAX(WRITE_dt), 1, 8)) AS last_updt
 		FROM board
 		WHERE kind_cd = 'MENU0203'
 		UNION ALL
 		SELECT
+			'교회소식' AS name,
+			'MENU0401' AS menu,
 			COUNT(*) AS cnt,
 			fun_fmt_date(SUBSTR(MAX(WRITE_dt), 1, 8)) AS last_updt
 		FROM board
 		WHERE kind_cd = 'MENU0401'
 		UNION ALL
 		SELECT
+			'관리자' AS name,
+			'MENU0501' AS menu,
 			COUNT(*) AS cnt,
 			(select name from admst where sn = (select max(sn) from admst)) AS last_updt
 		FROM admst

@@ -27,48 +27,26 @@ const Home = {
         }
     },
     template: `
-        <div class="container px-4 py-5" id="hanging-icons">
-            <h2 class="pb-2 border-bottom">관리자 홈</h2>
-            <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-                <div class="col d-flex align-items-start">
+        <div class="container px-4 py-1" id="hanging-icons">
+            <md-header :title="'관리자 홈'"></md-header>
+            <!--<h2 class="pb-2 border-bottom">관리자 홈</h2>-->
+            <div class="row g-4 py-5 row-cols-1 row-cols-md-2 row-cols-lg-3">
+
+                <div v-for="item in dashBoardItems" class="col d-flex align-items-start pb-4">
                     <div class="d-flex p-1">
-                        <span class="material-symbols-outlined">close</span>
+                        <span class="material-symbols-outlined">spa</span>
                     </div>
                     <div>
-                        <h3 class="fs-3">교회주보</h3>
+                        <h3 class="fs-3">{{ item.name }}</h3>
                         <ul>
-                            <li>전체 3건</li>
-                            <li>최근 2022.11.23 업데이트</li>
+                            <li>전체 {{ item.cnt }}건</li>
+                            <li>최근 {{ item.last_updt }} 업데이트</li>
                         </ul>
-                        <a href="http://localhost:8081/mng/#/board?kind=MENU0203&bno=&title=주일설교" class="btn btn-primary">올리기</a>
+                        <a v-if="item.menu == 'MENU0501'" href="/mng/#/menu0501" class="btn btn-primary">올리기</a>
+                        <a v-else :href="'/mng/#/board?kind='+item.menu+'&bno=&title='+item.name" class="btn btn-primary">올리기</a>
                     </div>
                 </div>
-                <div class="col d-flex align-items-start">
-                    <div class="d-flex p-1">
-                        <span class="material-symbols-outlined">close</span>
-                    </div>
-                    <div>
-                        <h3 class="fs-3">교회주보</h3>
-                        <ul>
-                            <li>전체 3건</li>
-                            <li>최근 2022.11.23 업데이트</li>
-                        </ul>
-                        <a href="http://localhost:8081/mng/#/board?kind=MENU0203&bno=&title=주일설교" class="btn btn-primary">올리기</a>
-                    </div>
-                </div>
-                <div class="col d-flex align-items-start">
-                    <div class="d-flex p-1">
-                        <span class="material-symbols-outlined">close</span>
-                    </div>
-                    <div>
-                        <h3 class="fs-3">교회주보</h3>
-                        <ul>
-                            <li>전체 3건</li>
-                            <li>최근 2022.11.23 업데이트</li>
-                        </ul>
-                        <a href="http://localhost:8081/mng/#/board?kind=MENU0203&bno=&title=주일설교" class="btn btn-primary">올리기</a>
-                    </div>
-                </div>
+
             </div>
         </div>                
 `}
