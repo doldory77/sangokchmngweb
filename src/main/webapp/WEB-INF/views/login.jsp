@@ -24,6 +24,7 @@
     <script src="https://unpkg.com/vue-router@4"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/mng/js/util/Comm.js"></script>
     
 </head>
 <body class="text-center">
@@ -56,7 +57,8 @@
 <script>
     const {createApp} = Vue
     const http = axios.create({
-        baseURL: "http://localhost:8080/mng",
+        // baseURL: "http://localhost:8080/mng",
+        baseURL: Comm.baseURL,
     })
 
     const app = createApp({

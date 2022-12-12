@@ -1,7 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
+<%@ page import="org.sangokch.model.Admst" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Set" %>
+<%@ page import="java.util.HashSet" %>
+<%
+    Admst admst = (Admst) session.getAttribute("admst");
+    System.out.println("########## " + admst.getAuthorities().get(0) + " ##########");
+    Set<String> authMenu = new HashSet<>(admst.getAuthorities());
+    System.out.println("########## " + authMenu.contains("MENU0901") + " ##########");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,6 +83,7 @@
                               교회소개
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+                                
                                 <li><router-link class="dropdown-item" :to="{name:'MENU0101',query: {pageno:'1'}}">우리교회는?</router-link></li>
                                 <li><router-link class="dropdown-item" :to="{name:'MENU0102',query: {pageno:'1'}}">교회섬김이</router-link></li>
                                 <li><router-link class="dropdown-item" :to="{name:'MENU0103',query: {pageno:'1'}}">오시는 길</router-link></li>

@@ -54,6 +54,7 @@ public class DefaultController {
 	public String index(Model model, HttpServletRequest request) {
 //		logger.info(System.getProperty("user.dir"));
 //		logger.info(request.getSession().getServletContext().getRealPath("/"));
+		
 		return "index";
 	}
 	
@@ -73,6 +74,7 @@ public class DefaultController {
 		logger.info("session id: {}", sess.getId());
 		sess.setAttribute("admst", admst);
 		
+		res.setData(admst);
 		return res;
 	}
 	
