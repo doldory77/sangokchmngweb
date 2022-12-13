@@ -1,8 +1,10 @@
 package org.sangokch.web;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -73,8 +75,18 @@ public class DefaultController {
 		HttpSession sess = request.getSession();
 		logger.info("session id: {}", sess.getId());
 		sess.setAttribute("admst", admst);
+		sess.setAttribute("authMenu", new HashSet<String>(admst.getAuthorities()));
 		
 		res.setData(admst);
+		return res;
+	}
+	
+	@RequestMapping("/doLogout")
+	public @ResponseBody ResponseData doLogout(@RequestBody Map<String, Object> params, HttpServletRequest request) {
+		
+		ResponseData res = getRes("success");
+		
+		request.getSession().invalidate();
 		return res;
 	}
 	

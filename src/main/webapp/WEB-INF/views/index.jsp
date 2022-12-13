@@ -2,15 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="org.sangokch.model.Admst" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Set" %>
-<%@ page import="java.util.HashSet" %>
-<%
-    Admst admst = (Admst) session.getAttribute("admst");
-    System.out.println("########## " + admst.getAuthorities().get(0) + " ##########");
-    Set<String> authMenu = new HashSet<>(admst.getAuthorities());
-    System.out.println("########## " + authMenu.contains("MENU0901") + " ##########");
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -83,10 +75,15 @@
                               교회소개
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
-                                
+                                <c:if test="${authMenu.contains('MENU0101')}">
                                 <li><router-link class="dropdown-item" :to="{name:'MENU0101',query: {pageno:'1'}}">우리교회는?</router-link></li>
+                                </c:if>
+                                <c:if test="${authMenu.contains('MENU0102')}">
                                 <li><router-link class="dropdown-item" :to="{name:'MENU0102',query: {pageno:'1'}}">교회섬김이</router-link></li>
+                                </c:if>
+                                <c:if test="${authMenu.contains('MENU0103')}">
                                 <li><router-link class="dropdown-item" :to="{name:'MENU0103',query: {pageno:'1'}}">오시는 길</router-link></li>
+                                </c:if>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -94,9 +91,15 @@
                               예배
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                <c:if test="${authMenu.contains('MENU0201')}">
                                 <li><router-link class="dropdown-item" :to="{name:'MENU0201',query: {pageno:'1'}}">예배안내</router-link></li>
+                                </c:if>
+                                <c:if test="${authMenu.contains('MENU0202')}">
                                 <li><router-link class="dropdown-item" :to="{name:'MENU0202',query: {pageno:'1'}}">교회주보</router-link></li>
+                                </c:if>
+                                <c:if test="${authMenu.contains('MENU0203')}">
                                 <li><router-link class="dropdown-item" :to="{name:'MENU0203',query: {pageno:'1'}}">주일설교</router-link></li>  
+                                </c:if>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -107,7 +110,9 @@
                               교제와나눔
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
+                                <c:if test="${authMenu.contains('MENU0401')}">
                                 <li><router-link class="dropdown-item" to="/menu0401">교회소식</router-link></li>
+                                </c:if>
                             </ul>
                         </li>
                         <li class="nav-item dropdown disabled">
@@ -115,7 +120,9 @@
                               시스템
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink4">
+                                <c:if test="${authMenu.contains('MENU0501')}">
                                 <li><router-link class="dropdown-item" to="/menu0501">권한</router-link></li>
+                                </c:if>
                             </ul>
                         </li>
                     </ul>
@@ -123,6 +130,7 @@
                         <input v-model="searchText" class="form-control me-2" type="search" placeholder="성경구절 또는 찬송가" aria-label="성경구절 또는 찬송가">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
+                    <c:if test="${null ne admst}"><button class="btn btn-outline-light m-1" @click="logout">Logout</button></c:if>
                 </div>
             </div>
         </nav>
@@ -214,6 +222,22 @@
                     console.error(err)
                     alert(err.response.data.msg)
                 }
+            },
+            async logout() {
+                try {
+                    const result = await this.$http.post("/doLogout", {}, {
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
+                    })
+                    // console.log(result)
+                    if (result.data && result.data.result == 'success') {
+                        window.location = "/mng"
+                    }
+                } catch (err) {
+                    console.error(err)
+                    alert(err.response.data.msg)
+                }                
             },
             showModal() {
                 if (this.searchItems && this.searchItems.length > 0) {
