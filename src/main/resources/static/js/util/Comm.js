@@ -51,5 +51,23 @@ const Comm = {
             }
         }
         return result
+    },
+    setCookie(name, value, expiredays) {
+        let todayDate = new Date()
+        todayDate.setDate(todayDate.getDate() + expiredays)
+        document.cookie = name + "=" + escape(value) + ";path=/;expires=" + todayDate.toGMTString() + ";"
+    },
+    getCookie(name) {
+        let search = name + "="
+        if (document.cookie.length > 0) {
+            var offset = document.cookie.indexOf(search)
+            var end = -1
+            if (offset != -1) {
+                offset += search.length;
+                end = document.cookie.indexOf(";", offset)
+                if (end == -1) end = document.cookie.length
+                return unescape(document.cookie.substring(offset, end))
+            }
+        }
     }
 }

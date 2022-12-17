@@ -33,7 +33,7 @@
       <form @submit.prevent="formSubmit">
         <!-- <img class="mb-4" src="https://getbootstrap.kr/docs/5.2/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
         <img class="mb-4" src="/mng/img/logo_with_title.jpg" alt="">
-        <h1 class="h3 mb-3 fw-normal">로그인 하세요!</h1>
+        <h1 class="h4 mt-2 mb-3 fw-normal">로그인 하세요!</h1>
     
         <div class="form-floating">
           <input type="email" v-model="id" class="form-control" id="floatingInput" placeholder="name@example.com">
@@ -46,7 +46,7 @@
     
         <div class="checkbox mb-3">
           <label>
-            <input type="checkbox" value="remember-me"> ID 기억하기
+            <input @click="checkBoxClick" type="checkbox" value="remember-me" ref="rememberChk"> ID 기억하기
           </label>
         </div>
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
@@ -84,10 +84,25 @@
                     console.error(err)
                     alert(err.response.data.msg)
                 }
+            },
+            checkBoxClick() {
+                try {
+                    let chkDom = this.$refs.rememberChk
+                    if (chkDom.checked && this.id) {
+                        Comm.setCookie('id', this.id, 7)
+                        console.log(Comm.getCookie('id'))
+                    } else if (!chkDom.checked) {
+                        Comm.setCookie('id', this.id, 0)
+                    }
+                    
+                } catch (err) {
+                    console.error(err)
+                }
             }
+            
         },
         mounted() {
-
+            this.id = Comm.getCookie('id')
         }
     })
     app.config.globalProperties.$http = http
