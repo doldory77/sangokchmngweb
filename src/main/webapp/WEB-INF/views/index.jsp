@@ -61,7 +61,10 @@
         </div>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top sg-navbar">
             <div class="container-lg">
-                <a class="navbar-brand" href="#">산곡성결교회</a>
+                <a class="navbar-brand" href="#">
+                    <img src="/mng/img/logo_100.png" alt="Logo" width="32" height="32" class="d-inline-block align-text-top">
+                    산곡성결교회
+                </a>
                 <button id="navBarTogglerBtn" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
