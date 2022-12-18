@@ -29,6 +29,9 @@ public class BoardService {
 	@Value("${spring.servlet.multipart.location}")
 	String filePath;
 	
+	@Value("${run.env.mode}")
+	String envMode;
+	
 	@Autowired
 	BoardMapper boardMapper;
 	
@@ -40,14 +43,14 @@ public class BoardService {
 		List<File> savedFileList = new ArrayList<>();
 		try {
 			boardMapper.insertBoard(board);
-			System.out.println(board.getBno());
+			logger.info("run.env.mode : ", envMode);
 			if (files != null && files.length > 0) {				
 				for (int i=0; i<files.length; i++) {
 //				if (i==1) throw new Exception("일부로 오류 발생시킴");
 					AttchFile file = new AttchFile();
 					file.setBno(board.getBno());
 					file.setFile_nm(fileNames[i]);
-					file.setFile_path(Const.userDir.concat(filePath));
+					file.setFile_path("prod".equalsIgnoreCase(envMode) ? filePath : Const.userDir.concat(filePath));
 					file.setFile_org_nm(files[i].getOriginalFilename());
 					file.setFile_size(files[i].getSize());
 					boardMapper.insertFile(file);
@@ -117,7 +120,7 @@ public class BoardService {
 					AttchFile file = new AttchFile();
 					file.setBno(board.getBno());
 					file.setFile_nm(fileNames[i]);
-					file.setFile_path(Const.userDir.concat(filePath));
+					file.setFile_path("prod".equalsIgnoreCase(envMode) ? filePath : Const.userDir.concat(filePath));
 					file.setFile_org_nm(files[i].getOriginalFilename());
 					boardMapper.insertFile(file);
 					File saveFile = new File(file.getFile_path(), file.getFile_nm());
