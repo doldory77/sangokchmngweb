@@ -63,7 +63,9 @@
             <div class="container-lg">
                 <a class="navbar-brand" href="#">
                     <img src="/mng/img/logo_100.png" alt="Logo" width="32" height="32" class="d-inline-block align-text-top">
-                    산곡성결교회
+                    <div style="display: inline-block; position: relative; width: 120px; padding-left: 3px;">
+                        <div style="position: absolute; top: -20px;">산곡성결교회</div>
+                    </div>
                 </a>
                 <button id="navBarTogglerBtn" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -181,7 +183,9 @@
     })
     router.beforeEach((to, from, next) => {
         let wd = window.innerWidth || document.body.clientWidth
-        if (wd <= 991) document.getElementById("navBarTogglerBtn").click()
+        if (wd <= 991) {
+            if (document.getElementById("navBarTogglerBtn").getAttribute("aria-expanded") === 'true') document.getElementById("navBarTogglerBtn").click()
+        }
         next()
     })
     const http = axios.create({
