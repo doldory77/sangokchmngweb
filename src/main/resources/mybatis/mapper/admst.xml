@@ -34,7 +34,7 @@
 		) VALUES (
 			#{id},
 			#{name},
-			(SELECT IFNULL(MAX(sn), 0)+1 FROM admst),	
+			(SELECT NO FROM (SELECT IFNULL(MAX(sn), 0)+1 AS NO FROM admst) AS tmp),	
 			<if test='attr neq null and attr neq ""'>
 			#{attr},
 			</if>
