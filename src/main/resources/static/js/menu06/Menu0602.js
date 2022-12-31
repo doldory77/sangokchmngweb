@@ -1,8 +1,8 @@
-const Menu0101 = {
+const Menu0602 = {
     data() {
       return {
         boardItems:[],
-        kindCd:'MENU0101',
+        kindCd:'MENU0602',
         nextYn:'N',
         pageNo:'0',
         pageNextNo:'1',
@@ -46,17 +46,17 @@ const Menu0101 = {
     template: `
     <main class="container">
 
-      <md-header :title="'산곡교회비전'">
-        <router-link class="btn btn-outline-light" :to="{name: 'Board', query: {kind:'MENU0101', bno:'', title:'산곡교회비전'}}">등록</router-link>
+      <md-header :title="'제자훈련'">
+        <router-link class="btn btn-outline-light" :to="{name: 'Board', query: {kind:'MENU0602', bno:'', title:'제자훈련'}}">등록</router-link>
       </md-header>
     
       <div class="my-3 p-3 bg-body rounded shadow-sm">
         <h6 class="d-none border-bottom pb-2 mb-0">Suggestions</h6>
         
-        <bd-item v-for="item in boardItems" :key="item.bno" :kind="'MENU0101'" :bno="item.bno" :subject="item.subject" :content="item.content" :tagYn="item.tag_yn" :title="'산곡교회비전'"></bd-item>
+        <bd-item v-for="item in boardItems" :key="item.bno" :kind="'MENU0602'" :bno="item.bno" :subject="item.subject" :content="item.content" :tagYn="item.tag_yn" :title="'제자훈련'"></bd-item>
 
         <div v-if="nextYn == 'Y' ? true : false" class="d-flex mt-2 justify-content-center justify-content-lg-end">
-          <router-link class="btn btn-outline-primary col-8 col-lg-3" role="button" :to="{name: 'MENU0101', query: {pageno:pageNextNo}}">더보기</router-link>
+          <router-link class="btn btn-outline-primary col-8 col-lg-3" role="button" :to="{name: 'MENU0602', query: {pageno:pageNextNo}}">더보기</router-link>
         </div>
       </div>
     </main>

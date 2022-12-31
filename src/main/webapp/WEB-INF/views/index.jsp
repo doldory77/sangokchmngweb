@@ -26,10 +26,23 @@
     <script src="/mng/js/menu01/Menu0101.js"></script>
     <script src="/mng/js/menu01/Menu0102.js"></script>
     <script src="/mng/js/menu01/Menu0103.js"></script>
-    <script src="/mng/js/menu02/Menu0201.js"></script>
-    <script src="/mng/js/menu02/Menu0202.js"></script>
+    <script src="/mng/js/menu01/Menu0104.js"></script>
+    <script src="/mng/js/menu01/Menu0105.js"></script>
     <script src="/mng/js/menu02/Menu0203.js"></script>
+    <script src="/mng/js/menu02/Menu0204.js"></script>
+    <script src="/mng/js/menu02/Menu0205.js"></script>
+    <script src="/mng/js/menu02/Menu0206.js"></script>
+    <script src="/mng/js/menu03/Menu0301.js"></script>
+    <script src="/mng/js/menu03/Menu0302.js"></script>
+    <script src="/mng/js/menu03/Menu0303.js"></script>
+    <script src="/mng/js/menu03/Menu0304.js"></script>
+    <script src="/mng/js/menu06/Menu0601.js"></script>
+    <script src="/mng/js/menu06/Menu0602.js"></script>
+    <script src="/mng/js/menu06/Menu0603.js"></script>
+    <script src="/mng/js/menu06/Menu0604.js"></script>
     <script src="/mng/js/menu04/Menu0401.js"></script>
+    <script src="/mng/js/menu04/Menu0402.js"></script>
+    <script src="/mng/js/menu04/Menu0403.js"></script>
     <script src="/mng/js/menu05/Menu0501.js"></script>
     <!--<script src="/js/etc/Temp.js"></script>
     -->
@@ -70,8 +83,10 @@
                 <button id="navBarTogglerBtn" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
+                <!-- 상단 내비게이션 -->
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
+                        <!-- 메뉴 -->
                         <li class="nav-item">
                             <router-link class="nav-link" :to="{name:'MENU0001',query: {pageno:'1'}}" disabled>홈</router-link>
                         </li>
@@ -81,10 +96,16 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
                                 <c:if test="${authMenu.contains('MENU0101')}">
-                                <li><router-link class="dropdown-item" :to="{name:'MENU0101',query: {pageno:'1'}}">우리교회는?</router-link></li>
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0101',query: {pageno:'1'}}">산곡교회비전</router-link></li>
+                                </c:if>
+                                <c:if test="${authMenu.contains('MENU0104')}">
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0104',query: {pageno:'1'}}">산곡교회연혁</router-link></li>
                                 </c:if>
                                 <c:if test="${authMenu.contains('MENU0102')}">
-                                <li><router-link class="dropdown-item" :to="{name:'MENU0102',query: {pageno:'1'}}">교회섬김이</router-link></li>
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0102',query: {pageno:'1'}}">섬기는 분</router-link></li>
+                                </c:if>
+                                <c:if test="${authMenu.contains('MENU0105')}">
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0105',query: {pageno:'1'}}">예배시간</router-link></li>
                                 </c:if>
                                 <c:if test="${authMenu.contains('MENU0103')}">
                                 <li><router-link class="dropdown-item" :to="{name:'MENU0103',query: {pageno:'1'}}">오시는 길</router-link></li>
@@ -93,33 +114,77 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              예배
+                              예배찬양
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-                                <c:if test="${authMenu.contains('MENU0201')}">
-                                <li><router-link class="dropdown-item" :to="{name:'MENU0201',query: {pageno:'1'}}">예배안내</router-link></li>
-                                </c:if>
-                                <c:if test="${authMenu.contains('MENU0202')}">
-                                <li><router-link class="dropdown-item" :to="{name:'MENU0202',query: {pageno:'1'}}">교회주보</router-link></li>
-                                </c:if>
                                 <c:if test="${authMenu.contains('MENU0203')}">
-                                <li><router-link class="dropdown-item" :to="{name:'MENU0203',query: {pageno:'1'}}">주일설교</router-link></li>  
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0203',query: {pageno:'1'}}">설교</router-link></li>  
+                                </c:if>
+                                <c:if test="${authMenu.contains('MENU0204')}">
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0204',query: {pageno:'1'}}">찬양</router-link></li>
+                                </c:if>
+                                <c:if test="${authMenu.contains('MENU0205')}">
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0205',query: {pageno:'1'}}">행사</router-link></li>
+                                </c:if>
+                                <c:if test="${authMenu.contains('MENU0206')}">
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0206',query: {pageno:'1'}}">특강</router-link></li>
                                 </c:if>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/temp" disabled>교회학교</router-link>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink5" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              다음세대
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink5">
+                                <c:if test="${authMenu.contains('MENU0301')}">
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0301',query: {pageno:'1'}}">유치부</router-link></li>  
+                                </c:if>
+                                <c:if test="${authMenu.contains('MENU0302')}">
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0302',query: {pageno:'1'}}">유초등부</router-link></li>
+                                </c:if>
+                                <c:if test="${authMenu.contains('MENU0303')}">
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0303',query: {pageno:'1'}}">학생부</router-link></li>
+                                </c:if>
+                                <c:if test="${authMenu.contains('MENU0304')}">
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0304',query: {pageno:'1'}}">청년부</router-link></li>
+                                </c:if>
+                            </ul>
                         </li>
                         <li class="nav-item dropdown disabled">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              교제와나눔
+                              훈련사역
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
-                                <c:if test="${authMenu.contains('MENU0401')}">
-                                <li><router-link class="dropdown-item" to="/menu0401">교회소식</router-link></li>
+                                <c:if test="${authMenu.contains('MENU0601')}">
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0601',query: {pageno:'1'}}">새가족</router-link></li>  
+                                </c:if>
+                                <c:if test="${authMenu.contains('MENU0602')}">
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0602',query: {pageno:'1'}}">제자훈련</router-link></li>
+                                </c:if>
+                                <c:if test="${authMenu.contains('MENU0603')}">
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0603',query: {pageno:'1'}}">젊은부부</router-link></li>
+                                </c:if>
+                                <c:if test="${authMenu.contains('MENU0604')}">
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0604',query: {pageno:'1'}}">선교</router-link></li>
                                 </c:if>
                             </ul>
                         </li>
+                        <li class="nav-item dropdown disabled">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink6" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              교회소식
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink6">
+                                <c:if test="${authMenu.contains('MENU0401')}">
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0401',query: {pageno:'1'}}">교회소식</router-link></li>  
+                                </c:if>
+                                <c:if test="${authMenu.contains('MENU0402')}">
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0402',query: {pageno:'1'}}">새가족</router-link></li>
+                                </c:if>
+                                <c:if test="${authMenu.contains('MENU0403')}">
+                                <li><router-link class="dropdown-item" :to="{name:'MENU0403',query: {pageno:'1'}}">갤러리</router-link></li>
+                                </c:if>
+                            </ul>
+                        </li>                        
                         <li class="nav-item dropdown disabled">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink4" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                               시스템
@@ -169,13 +234,32 @@
             {name:'Board', path:'/board', component:BoardRegView},
             // {name:'Temp', path:'/temp', component:Temp},
             {name:'MENU0001', path:'/menu0001', component:Menu0001},
-            {name:'MENU0101', path:'/menu0101', component:Menu0101},
-            {name:'MENU0102', path:'/menu0102', component:Menu0102},
-            {name:'MENU0103', path:'/menu0103', component:Menu0103},
-            {name:'MENU0201', path:'/menu0201', component:Menu0201},
-            {name:'MENU0202', path:'/menu0202', component:Menu0202},
-            {name:'MENU0203', path:'/menu0203', component:Menu0203},
-            {name:'MENU0401', path:'/menu0401', component:Menu0401},
+
+            {name:'MENU0101', path:'/menu0101', component:Menu0101},    // 산곡교회 비전
+            {name:'MENU0104', path:'/menu0104', component:Menu0104},    // 산곡교회 연혁
+            {name:'MENU0102', path:'/menu0102', component:Menu0102},    // 섬기는 분
+            {name:'MENU0105', path:'/menu0105', component:Menu0105},    // 예배시간
+            {name:'MENU0103', path:'/menu0103', component:Menu0103},    // 오시는 길
+
+            {name:'MENU0203', path:'/menu0203', component:Menu0203},    // 설교
+            {name:'MENU0204', path:'/menu0204', component:Menu0204},    // 찬양
+            {name:'MENU0205', path:'/menu0205', component:Menu0205},    // 행사
+            {name:'MENU0206', path:'/menu0206', component:Menu0206},    // 특강
+
+            {name:'MENU0301', path:'/menu0301', component:Menu0301},    // 유치부
+            {name:'MENU0302', path:'/menu0302', component:Menu0302},    // 유초등부
+            {name:'MENU0303', path:'/menu0303', component:Menu0303},    // 학생부
+            {name:'MENU0304', path:'/menu0304', component:Menu0304},    // 청년부
+
+            {name:'MENU0601', path:'/menu0601', component:Menu0601},    // 새가족
+            {name:'MENU0602', path:'/menu0602', component:Menu0602},    // 제자훈련
+            {name:'MENU0603', path:'/menu0603', component:Menu0603},    // 젊은부부
+            {name:'MENU0604', path:'/menu0604', component:Menu0604},    // 선교
+            
+            {name:'MENU0401', path:'/menu0401', component:Menu0401},    // 교회소식
+            {name:'MENU0402', path:'/menu0402', component:Menu0402},    // 새가족
+            {name:'MENU0403', path:'/menu0403', component:Menu0403},    // 갤러리
+
             {name:'MENU0501', path:'/menu0501', component:Menu0501},
             // {name:'Menu03', path:'/menu03', component:Temp},
             

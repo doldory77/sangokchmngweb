@@ -24,7 +24,7 @@ const Menu0501 = {
                   }
               })
               if (result.data && result.data.result == 'success') {
-                  this.authMenus = result.data.data
+                  this.authMenus = result.data.data.filter(item => item.use_yn == 'Y')
                   
                   console.log(this.authMenus)
               }
