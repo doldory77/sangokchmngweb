@@ -153,9 +153,13 @@
 			,#{file_org_nm}
 			,#{file_path}
 			,#{file_size}
-		)	
+		)
 	</insert>
 	<delete id="deleteFile" parameterType="AttchFile">
 		DELETE FROM file WHERE bno = #{bno} and file_nm = #{file_nm}
 	</delete>
+	
+	<select id="selectNextOrdNo" parameterType="hashmap" resultType="int">
+		SELECT IFNULL(max(ORD), 0)+1 as ord_no FROM board WHERE kind_cd = #{kind_cd}
+	</select>
 </mapper>

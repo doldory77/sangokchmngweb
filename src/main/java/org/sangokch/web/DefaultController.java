@@ -90,6 +90,19 @@ public class DefaultController {
 		return res;
 	}
 	
+	@RequestMapping("/board/nextOrdNo")
+	public @ResponseBody ResponseData nextOrdNo(@RequestBody Map<String, Object> params) {
+		
+		ResponseData res = getRes("success");
+		
+		int nextOrdNo = boardService.selectNextOrdNo(params);
+		params.put("nextOrdNo", nextOrdNo);
+		res.setData(params);
+		
+		return res;
+		
+	}
+	
 	@RequestMapping("/board/save")
 	public @ResponseBody ResponseData save(
 			Board board,

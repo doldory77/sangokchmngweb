@@ -53,6 +53,22 @@ const BoardRegView = {
             
                 }
             })(this)
+        } else {
+            (async function(that){
+                try {
+                    const result = await that.$http.post("/board/nextOrdNo", {kind_cd:that.boardKind}, {
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
+                    })
+                    console.log(result)
+                    if (result.data.result === 'success') {
+                        that.ord =  result.data.data.nextOrdNo
+                    }
+                } catch (err) {
+
+                }
+            })(this)
         }
     },
     computed: {

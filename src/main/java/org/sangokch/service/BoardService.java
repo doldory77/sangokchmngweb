@@ -148,5 +148,8 @@ public class BoardService {
 		return result;
 	}
 	
+	public int selectNextOrdNo(Map<String, Object> partams) {
+		return boardMapper.selectNextOrdNo(partams);
+	}
 	
 }

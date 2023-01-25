@@ -18,4 +18,5 @@ public interface BoardMapper {
 	public int updateBoard(Board board);
 	public void insertFile(AttchFile file);
 	public int deleteFile(AttchFile file);
+	public int selectNextOrdNo(Map<String, Object> params);
 }
